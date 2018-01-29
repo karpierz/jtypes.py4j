@@ -10,7 +10,7 @@ __title__        = "jtypes.py4j"
 __summary__      = "Enables Python to dynamically access arbitrary Java objects " \
                    "(ctypes/cffi-based Py4J)"
 __uri__          = "http://pypi.python.org/pypi/jtypes.py4j/"
-__version_info__ = type("version_info", (), dict(serial=1,
+__version_info__ = type("version_info", (), dict(serial=2,
                         major=0, minor=10, micro=6, releaselevel="alpha"))
 __version__      = "{0.major}.{0.minor}.{0.micro}{1}{2}".format(__version_info__,
                    dict(final="", alpha="a", beta="b", rc="rc")[__version_info__.releaselevel],
