@@ -1,0 +1,21 @@
+include README.rst
+include CHANGES.rst
+include LICENSE
+include tox.ini
+
+graft src
+exclude src/jt/py4j/_java/class2py.py
+
+exclude src/jt/py4j/*.my
+prune   src/jt/py4j!
+prune   src/jt/py4j/_java
+include src/jt/py4j/_java/__init__.py
+include src/jt/py4j/_java/py4j.jar
+
+graft docs
+prune docs/_build
+
+graft tests
+
+global-exclude .build .build.*
+global-exclude *.py[co] __pycache__
