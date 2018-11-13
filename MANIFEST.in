@@ -6,9 +6,11 @@ include tox.ini
 graft src
 recursive-exclude src/jt/py4j/_java *.java
 exclude src/jt/py4j/*.my
+prune   src/jt/py4j/_java/py4j
+prune   src/jt/py4j/_java/py4j-org
+exclude src/jt/py4j/_java/py4j.jar
 prune   src/jt/py4j!
 prune   src/jt/py4j-org
-prune   src/jt/py4j/_java/py4j-org
 
 graft docs
 prune docs/_build
