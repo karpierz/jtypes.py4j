@@ -4,8 +4,13 @@ include LICENSE
 include tox.ini
 
 graft src
-recursive-exclude src/jt/py4j/_java *.java
 exclude src/jt/py4j/*.my
+exclude src/jt/py4j/*.py
+include src/jt/py4j/__about__.py
+include src/jt/py4j/__config__.py
+include src/jt/py4j/__init__.py
+include src/jt/py4j/version.py
+recursive-exclude src/jt/py4j/_java *.java
 prune   src/jt/py4j/_java/py4j
 prune   src/jt/py4j/_java/py4j-org
 exclude src/jt/py4j/_java/py4j.jar
