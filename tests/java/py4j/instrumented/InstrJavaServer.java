@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,23 +42,23 @@ import py4j.commands.Command;
 
 public class InstrJavaServer extends JavaServer {
 
-    public InstrJavaServer(Object entryPoint, int port, int connectTimeout, int readTimeout,
-            List<Class<? extends Command>> customCommands, Py4JPythonClientPerThread pythonClient) {
-        super(entryPoint, port, connectTimeout, readTimeout, customCommands, pythonClient);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrJavaServer(Object entryPoint, int port, int connectTimeout, int readTimeout,
+			List<Class<? extends Command>> customCommands, Py4JPythonClientPerThread pythonClient) {
+		super(entryPoint, port, connectTimeout, readTimeout, customCommands, pythonClient);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 
-    @Override
-    protected Py4JServerConnection createConnection(Gateway gateway, Socket socket) throws IOException {
-        ClientServerConnection connection = new InstrClientServerConnection(gateway, socket, getCustomCommands(),
-                (Py4JPythonClientPerThread) getCallbackClient(), this, getReadTimeout());
-        connection.startServerConnection();
-        return connection;
-    }
+	@Override
+	protected Py4JServerConnection createConnection(Gateway gateway, Socket socket) throws IOException {
+		ClientServerConnection connection = new InstrClientServerConnection(gateway, socket, getCustomCommands(),
+				(Py4JPythonClientPerThread) getCallbackClient(), this, getReadTimeout());
+		connection.startServerConnection();
+		return connection;
+	}
 }

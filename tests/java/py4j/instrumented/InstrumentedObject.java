@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,16 +31,16 @@ package py4j.instrumented;
 
 public class InstrumentedObject {
 
-    private String name;
+	private String name;
 
-    public InstrumentedObject(String name) {
-        this.name = name;
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrumentedObject(String name) {
+		this.name = name;
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 }

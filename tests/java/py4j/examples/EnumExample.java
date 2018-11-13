@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,12 +31,12 @@ package py4j.examples;
 
 public class EnumExample {
 
-    public enum MyEnum {
-        FOO;
-    }
+	public enum MyEnum {
+		FOO;
+	}
 
-    public class InnerClass {
-        public final static String MY_CONSTANT2 = "HELLO2";
-    }
+	public class InnerClass {
+		public final static String MY_CONSTANT2 = "HELLO2";
+	}
 
 }

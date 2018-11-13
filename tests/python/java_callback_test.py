@@ -15,9 +15,9 @@ import unittest
 from jt.py4j.compat import range
 from jt.py4j.java_gateway import (
     JavaGateway, PythonProxyPool, CallbackServerParameters,
-    set_default_callback_accept_timeout)
+    set_default_callback_accept_timeout, is_instance_of)
 from jt.py4j.protocol import Py4JJavaError
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     PY4J_JAVA_PATH, safe_shutdown, sleep, check_connection)
 
 
@@ -36,10 +36,11 @@ def start_no_mem_example_server():
         "py4j.examples.ExampleApplication$ExampleNoMemManagementApplication"])
 
 
-def start_python_entry_point_server():
-    subprocess.call([
+def start_python_entry_point_server(*args):
+    java_args = [
         "java", "-cp", PY4J_JAVA_PATH,
-        "py4j.examples.ExampleApplication$ExamplePythonEntryPointApplication"])
+        "py4j.examples.ExampleApplication$ExamplePythonEntryPointApplication"]
+    subprocess.call(java_args + list(args))
 
 
 def start_example_server2():
@@ -54,7 +55,7 @@ def start_example_server3():
         "py4j.examples.InterfaceExample"])
 
 
-def start_example_app_process(app=None):
+def start_example_app_process(app=None, args=()):
     # XXX DO NOT FORGET TO KILL THE PROCESS IF THE TEST DOES NOT SUCCEED
     if not app:
         target = start_example_server
@@ -62,7 +63,7 @@ def start_example_app_process(app=None):
         target = start_no_mem_example_server
     elif app == "pythonentrypoint":
         target = start_python_entry_point_server
-    p = Process(target=target)
+    p = Process(target=target, args=args)
     p.start()
     sleep()
     check_connection()
@@ -70,8 +71,8 @@ def start_example_app_process(app=None):
 
 
 @contextmanager
-def gateway_example_app_process(app=None):
-    p = start_example_app_process(app)
+def gateway_example_app_process(app=None, args=()):
+    p = start_example_app_process(app, args)
     try:
         yield p
     finally:
@@ -212,17 +213,38 @@ class IHelloImpl(object):
         implements = ["py4j.examples.IHello"]
 
 
+class IHelloFailingImpl(object):
+    def __init__(self, exception):
+        self.exception = exception
+
+    def sayHello(self, i=None, s=None):
+        raise self.exception
+
+    class Java:
+        implements = ["py4j.examples.IHello"]
+
+
 class PythonEntryPointTest(unittest.TestCase):
 
     def test_python_entry_point(self):
-        from .py4j_callback_recursive_example import (
+        self._run_test()
+
+    def test_python_entry_point_with_auth(self):
+        self._run_test("secret-token")
+
+    def _run_test(self, auth_token=None):
+        from .py4j_callback_recursive_example import (  # <AK> was: from py4j.tests.
             HelloState)
         hello_state = HelloState()
+        cb_params = CallbackServerParameters(auth_token=auth_token)
         gateway = JavaGateway(
-            callback_server_parameters=CallbackServerParameters(),
+            callback_server_parameters=cb_params,
             python_server_entry_point=hello_state)
 
-        with gateway_example_app_process("pythonentrypoint"):
+        args = []
+        if auth_token:
+            args = [auth_token]
+        with gateway_example_app_process("pythonentrypoint", args):
             gateway.shutdown()
 
         # Check that Java correctly called Python
@@ -265,7 +287,8 @@ class IntegrationTest(unittest.TestCase):
     def setUp(self):
         self.p = start_example_app_process()
         self.gateway = JavaGateway(
-            callback_server_parameters=CallbackServerParameters())
+            callback_server_parameters=CallbackServerParameters(
+                propagate_java_exceptions=True))
         sleep()
 
     def tearDown(self):
@@ -326,7 +349,7 @@ class IntegrationTest(unittest.TestCase):
         example = self.gateway.jvm.py4j.examples.ReturnerExample()
         returner = Returner()
         output = example.computeNull(returner)
-        self.assertEqual(output, None)
+        self.assertIsNone(output)
 
     def testProxy(self):
         sleep()
@@ -336,6 +359,30 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(
             "This is Hello;\n10MyMy!\n;",
             example.callHello2(impl))
+
+    @unittest.skip("jt.py4j: !!!")
+    def testProxyError(self):
+        sleep()
+        example = self.gateway.entry_point.getNewExample()
+
+        try:
+            example.callHello(IHelloFailingImpl(
+                ValueError('My interesting Python exception')))
+            self.fail()
+        except Py4JJavaError as e:
+            self.assertIn('interesting Python exception', str(e))
+
+        try:
+            example.callHello(IHelloFailingImpl(
+                Py4JJavaError(
+                    '',
+                    self.gateway.jvm.java.lang.IllegalStateException(
+                        'My IllegalStateException'))))
+            self.fail()
+        except Py4JJavaError as e:
+            self.assertTrue(is_instance_of(
+                self.gateway, e.java_exception,
+                'java.lang.IllegalStateException'))
 
     def testGC(self):
         # This will only work with some JVM.
@@ -357,7 +404,7 @@ class IntegrationTest(unittest.TestCase):
 
         # Leave time for sotimeout
         sleep(3)
-        self.assertTrue(len(self.gateway.gateway_property.pool) < 2)
+        self.assertLess(len(self.gateway.gateway_property.pool), 2)
 
     def testDoubleCallbackServer(self):
         try:
@@ -375,7 +422,39 @@ class IntegrationTest(unittest.TestCase):
         oe1.randomBinaryOperator(goodAddition)
         # Test constructor
         oe2 = self.gateway.jvm.py4j.examples.OperatorExample(goodAddition)
-        self.assertTrue(oe2 is not None)
+        self.assertIsNotNone(oe2)
+
+
+class NoPropagateTest(unittest.TestCase):
+    def setUp(self):
+        self.p = start_example_app_process()
+        self.gateway = JavaGateway(
+            callback_server_parameters=CallbackServerParameters(
+                propagate_java_exceptions=False))
+        sleep()
+
+    def tearDown(self):
+        safe_shutdown(self)
+        self.p.join()
+        sleep()
+
+    @unittest.skip("jt.py4j: !!!")
+    def testProxyError(self):
+        sleep()
+        example = self.gateway.entry_point.getNewExample()
+
+        try:
+            example.callHello(IHelloFailingImpl(
+                Py4JJavaError(
+                    '',
+                    self.gateway.jvm.java.lang.IllegalStateException(
+                        'My IllegalStateException'))))
+            self.fail()
+        except Py4JJavaError as e:
+            self.assertTrue(is_instance_of(
+                self.gateway, e.java_exception,
+                'py4j.Py4JException'))
+            self.assertIn('My IllegalStateException', str(e))
 
 
 class ResetCallbackClientTest(unittest.TestCase):

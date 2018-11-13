@@ -8,7 +8,7 @@ from __future__ import unicode_literals, absolute_import
 import unittest
 
 from jt.py4j.java_gateway import JavaGateway, GatewayParameters
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     start_example_app_process, safe_shutdown, sleep)
 
 
@@ -27,7 +27,7 @@ class AutoConvertTest(unittest.TestCase):
         sj = self.gateway.jvm.java.util.HashSet()
         sj.add("b")
         sj.add(1)
-        sp = set([1, "b"])
+        sp = {1, "b"}
         self.assertTrue(sj.equals(sp))
 
 

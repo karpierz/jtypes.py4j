@@ -3,7 +3,7 @@ from __future__ import unicode_literals, absolute_import
 from jt.py4j.java_gateway import (
     java_import, UserHelpAutoCompletion)
 from jt.py4j.protocol import Py4JError
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     example_app_process, gateway)
 
 ExampleClassFields = sorted([

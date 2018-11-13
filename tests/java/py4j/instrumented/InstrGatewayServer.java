@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,32 +38,32 @@ import py4j.Py4JServerConnection;
 
 public class InstrGatewayServer extends GatewayServer {
 
-    public InstrGatewayServer(Object entryPoint, int port, int pythonPort) {
-        super(entryPoint, port, DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, null,
-                new InstrCallbackClient(pythonPort));
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrGatewayServer(Object entryPoint, int port, int pythonPort) {
+		super(entryPoint, port, DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, null,
+				new InstrCallbackClient(pythonPort));
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 
-    /**
-     * <p>
-     * Creates a server connection from a Python call to the Java side.
-     * </p>
-     *
-     * @param gateway
-     * @param socket
-     * @return
-     * @throws IOException
-     */
-    protected Py4JServerConnection createConnection(Gateway gateway, Socket socket) throws IOException {
-        InstrGatewayConnection connection = new InstrGatewayConnection(gateway, socket, getCustomCommands(),
-                getListeners());
-        connection.startConnection();
-        return connection;
-    }
+	/**
+	 * <p>
+	 * Creates a server connection from a Python call to the Java side.
+	 * </p>
+	 *
+	 * @param gateway
+	 * @param socket
+	 * @return
+	 * @throws IOException
+	 */
+	protected Py4JServerConnection createConnection(Gateway gateway, Socket socket) throws IOException {
+		InstrGatewayConnection connection = new InstrGatewayConnection(gateway, socket, getCustomCommands(),
+				getListeners());
+		connection.startConnection();
+		return connection;
+	}
 }

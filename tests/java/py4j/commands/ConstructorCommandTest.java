@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,74 +45,74 @@ import py4j.examples.ExampleEntryPoint;
 import py4j.examples.Stack;
 
 public class ConstructorCommandTest {
-    private ExampleEntryPoint entryPoint;
-    private Gateway gateway;
-    private ConstructorCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
+	private ExampleEntryPoint entryPoint;
+	private Gateway gateway;
+	private ConstructorCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
 
-    @Before
-    public void setUp() {
-        entryPoint = new ExampleEntryPoint();
-        gateway = new Gateway(entryPoint);
-        gateway.startup();
-        command = new ConstructorCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
-    }
+	@Before
+	public void setUp() {
+		entryPoint = new ExampleEntryPoint();
+		gateway = new Gateway(entryPoint);
+		gateway.startup();
+		command = new ConstructorCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testConstructor0Arg() {
-        String inputCommand = "py4j.examples.ExampleClass\ne\n";
-        try {
-            command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yro0\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testConstructor0Arg() {
+		String inputCommand = "py4j.examples.ExampleClass\ne\n";
+		try {
+			command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yro0\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testConstructor1Arg() {
-        String inputCommand = "py4j.examples.ExampleClass\ni5\ne\n";
-        try {
-            command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yro0\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testConstructor1Arg() {
+		String inputCommand = "py4j.examples.ExampleClass\ni5\ne\n";
+		try {
+			command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yro0\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testDefaultConstructor() {
-        String inputCommand = "py4j.examples.Stack\ne\n";
-        try {
-            command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yro0\n", sWriter.toString());
-            assertTrue(gateway.getObject("o0") instanceof Stack);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testDefaultConstructor() {
+		String inputCommand = "py4j.examples.Stack\ne\n";
+		try {
+			command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yro0\n", sWriter.toString());
+			assertTrue(gateway.getObject("o0") instanceof Stack);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testWrongConstructor() {
-        String inputCommand = "py4j.examples.Stack\ni5\ne\n";
-        try {
-            command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertTrue(sWriter.toString().startsWith("!x"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testWrongConstructor() {
+		String inputCommand = "py4j.examples.Stack\ni5\ne\n";
+		try {
+			command.execute("i", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertTrue(sWriter.toString().startsWith("!x"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

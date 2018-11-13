@@ -10,7 +10,7 @@ import unittest
 from jt.py4j.compat import unicode
 from jt.py4j.java_gateway import JavaGateway, GatewayParameters
 from jt.py4j.protocol import Py4JJavaError, Py4JError
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     start_example_app_process, safe_shutdown, sleep)
 
 
@@ -323,13 +323,13 @@ class ListTest(unittest.TestCase):
         pList = get_list(3)
         jList = ex.getList(3)
         jList2 = ex.getList(4)
-        self.assertTrue(jList == jList)
-        self.assertTrue(jList != jList2)
-        # self.assertTrue(jList < jList2)
-        self.assertTrue(jList != pList)
-        # self.assertTrue(jList == pList)
-        # self.assertTrue(jList2 != pList)
-        # self.assertTrue(jList2 > pList)
+        self.assertEqual(jList, jList)
+        self.assertNotEqual(jList, jList2)
+        # self.assertLess(jList, jList2)
+        self.assertNotEqual(jList, pList)
+        # self.assertEqual(jList, pList)
+        # self.assertNotEqual(jList2, pList)
+        # self.assertGreater(jList2, pList)
 
     def testException(self):
         ex = self.gateway.getNewExample()

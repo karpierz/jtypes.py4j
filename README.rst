@@ -8,26 +8,28 @@ Enables Python to dynamically access arbitrary Java objects.
 Overview
 ========
 
-  jtypes.py4j enables Python programs to dynamically access arbitrary Java objects via
+  **jtypes.py4j** enables Python programs to dynamically access arbitrary Java objects via
   Java's Native Invocation Interface (JNI).
 
-  | jtypes.py4j is a lightweight Python package, based on the *ctypes* or *cffi* library.
-  | It is an almost fully compliant implementation of Barthelemy Dagenais's *Py4J* package
+  `PyPI record`_.
+
+  | **jtypes.py4j** is a lightweight Python package, based on the *ctypes* or *cffi* library.
+  | It is an almost fully compliant implementation of Barthelemy Dagenais's **Py4J** package
     by reimplementing its functionality in a clean Python via JNI instead of Python and
     Java via custom API service.
 
 About Py4J:
 -----------
 
-Borrowed from the `original website <https://www.py4j.org>`__:
+Borrowed from the `original website`_:
 
-  Py4J enables Python programs running in a Python interpreter to dynamically
+  **Py4J** enables Python programs running in a Python interpreter to dynamically
   access Java objects in a Java Virtual Machine. Methods are called as if the
   Java objects resided in the Python interpreter and Java collections can be
-  accessed through standard Python collection methods. Py4J also enables Java
+  accessed through standard Python collection methods. **Py4J** also enables Java
   programs to call back Python objects.
 
-  | Here is a brief example of what you can do with Py4J.
+  | Here is a brief example of what you can do with **Py4J**.
   | The following Python program creates a java.util.Random instance from a JVM
     and calls some of its methods.
 
@@ -54,7 +56,7 @@ Prerequisites:
 + Python 2.7 or higher or 3.4 or higher
 
   * http://www.python.org/
-  * 2.7 and 3.4 are primary test environments.
+  * 2.7 and 3.6 are primary test environments.
 
 + pip and setuptools
 
@@ -72,11 +74,11 @@ To ensure everything is running correctly you can run the tests using::
 Development
 ===========
 
-Visit `development page <https://github.com/karpierz/jtypes.py4j>`__
+Visit `development page`_
 
 Installation from sources:
 
-Clone the `sources <https://github.com/karpierz/jtypes.py4j>`__ and run::
+Clone the `sources`_ and run::
 
     python -m pip install ./jtypes.py4j
 
@@ -102,4 +104,9 @@ License
 Authors
 =======
 
-* Adam Karpierz <python@python.pl>
+* Adam Karpierz <adam@karpierz.net>
+
+.. _PyPI record: https://pypi.python.org/pypi/jtypes.py4j
+.. _original website: https://www.py4j.org
+.. _development page: https://github.com/karpierz/jtypes.py4j
+.. _sources: https://github.com/karpierz/jtypes.py4j

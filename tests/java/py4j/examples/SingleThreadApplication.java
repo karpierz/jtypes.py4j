@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,31 +34,31 @@ import py4j.GatewayServer;
 
 public class SingleThreadApplication {
 
-    public static void main(String[] args) {
-        GatewayServer.turnLoggingOff();
-        ExampleEntryPoint point = new ExampleEntryPoint();
-        ClientServer clientServer = new ClientServer(point);
-        // Wait for Python side to shut down Java side
-        clientServer.startServer(true);
+	public static void main(String[] args) {
+		GatewayServer.turnLoggingOff();
+		ExampleEntryPoint point = new ExampleEntryPoint();
+		ClientServer clientServer = new ClientServer(point);
+		// Wait for Python side to shut down Java side
+		clientServer.startServer(true);
 
-        // Shut down after 5 seconds
-        //      clientServer.startServer(true);
-        //      try {
-        //          Thread.currentThread().sleep(5000);
-        //      } catch (Exception e) {
-        //          e.printStackTrace();
-        //      }
-        //      clientServer.shutdown();
-        //
-        //      System.out.println("Stopping");
-    }
+		// Shut down after 5 seconds
+		//		clientServer.startServer(true);
+		//		try {
+		//			Thread.currentThread().sleep(5000);
+		//		} catch (Exception e) {
+		//			e.printStackTrace();
+		//		}
+		//		clientServer.shutdown();
+		//
+		//		System.out.println("Stopping");
+	}
 
-    public static class SingleThreadShortTimeoutApplication {
-        public static void main(String[] args) {
-            GatewayServer.turnLoggingOff();
-            ClientServer clientServer = new ClientServer.ClientServerBuilder().readTimeout(250)
-                    .entryPoint(new ExampleEntryPoint()).build();
-            clientServer.startServer(true);
-        }
-    }
+	public static class SingleThreadShortTimeoutApplication {
+		public static void main(String[] args) {
+			GatewayServer.turnLoggingOff();
+			ClientServer clientServer = new ClientServer.ClientServerBuilder().readTimeout(250)
+					.entryPoint(new ExampleEntryPoint()).build();
+			clientServer.startServer(true);
+		}
+	}
 }

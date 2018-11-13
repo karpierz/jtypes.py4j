@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
-
-from __future__ import absolute_import
+from __future__ import absolute_import  # <AK> added
 
 from contextlib import contextmanager
 import gc
@@ -13,10 +12,10 @@ from jt.py4j.java_gateway import (
     DEFAULT_PORT, DEFAULT_PYTHON_PROXY_PORT)
 from jt.py4j.clientserver import (
     ClientServer, JavaParameters, PythonParameters)
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     PY4J_JAVA_PATH, check_connection, sleep)
-from .py4j_callback_recursive_example import HelloState
-from .instrumented import (
+from .py4j_callback_recursive_example import HelloState  # <AK> was: from py4j.tests.
+from .instrumented import (  # <AK> was: from py4j.tests.
     InstrJavaGateway, InstrumentedPythonPing, register_creation,
     CREATED, FINALIZED, MEMORY_HOOKS, InstrClientServer)
 
@@ -621,16 +620,15 @@ class ClientServerTest(unittest.TestCase):
                 getFinalizedObjectsKeySet()
             # 7 objects: 2 InstrumentedObject (sayHello called twice), 1
             # JavaServer, 1 PythonClient, 1 ClientServer, 2
-            # ClientServerConnection (1 to call sayHello, 1 that calls GC from
-            # Java to Python)
-            self.assertEqual(7, len(createdSet))
-            self.assertEqual(7, len(finalizedSet))
+            # ClientServerConnection (1 to call sayHello)
+            self.assertEqual(6, len(createdSet))
+            self.assertEqual(6, len(finalizedSet))
             self.assertEqual(createdSet, finalizedSet)
             clientserver.shutdown()
 
             # 8 objects: ClientServer (ok), PythonServer (ok), JavaClient,
-            # GatewayProperty, HelloState (ok), 3 ClientServer Connections (2)
-            assert_python_memory(self, 8)
+            # GatewayProperty, HelloState (ok), 3 ClientServer Connections (1)
+            assert_python_memory(self, 7)
 
     def testJavaToPythonToJavaNoGC(self):
         def internal_work(clientserver):
@@ -668,16 +666,15 @@ class ClientServerTest(unittest.TestCase):
                 getFinalizedObjectsKeySet()
             # 7 objects: 2 InstrumentedObject (sayHello called twice), 1
             # JavaServer, 1 PythonClient, 1 ClientServer, 2
-            # ClientServerConnection (1 to call sayHello, 1 that calls GC from
-            # Java to Python)
-            self.assertEqual(7, len(createdSet))
-            self.assertEqual(7, len(finalizedSet))
+            # ClientServerConnection (1 to call sayHello)
+            self.assertEqual(6, len(createdSet))
+            self.assertEqual(6, len(finalizedSet))
             self.assertEqual(createdSet, finalizedSet)
             clientserver.shutdown()
 
             # 8 objects: ClientServer (ok), PythonServer (ok), JavaClient,
             # GatewayProperty, HelloState (ok), 3 ClientServer Connections (2)
-            assert_python_memory(self, 8)
+            assert_python_memory(self, 7)
 
     def testJavaToPythonToJavaCleanGCNoShutdown(self):
         def internal_work(clientserver):
@@ -713,16 +710,16 @@ class ClientServerTest(unittest.TestCase):
                 getFinalizedObjectsKeySet()
             # 8 objects: 2 InstrumentedObject (sayHello called twice), 1
             # JavaServer, 1 PythonClient, 1 ClientServer, 3
-            # ClientServerConnection (1 to call sayHello, 1 that calls GC from
-            # Java to Python, 1 that receives shutdown command)
-            self.assertEqual(8, len(createdSet))
-            self.assertEqual(8, len(finalizedSet))
+            # ClientServerConnection (1 to call sayHello,
+            # 1 that receives shutdown command)
+            self.assertEqual(7, len(createdSet))
+            self.assertEqual(7, len(finalizedSet))
             self.assertEqual(createdSet, finalizedSet)
             clientserver.shutdown()
 
             # 8 objects: ClientServer (ok), PythonServer (ok), JavaClient,
             # GatewayProperty, HelloState (ok), 3 ClientServer Connections (2)
-            assert_python_memory(self, 8)
+            assert_python_memory(self, 7)
 
     def testJavaToPythonToJavaNoGCNoShutdown(self):
         def internal_work(clientserver):
@@ -760,13 +757,13 @@ class ClientServerTest(unittest.TestCase):
                 getFinalizedObjectsKeySet()
             # 7 objects: 2 InstrumentedObject (sayHello called twice), 1
             # JavaServer, 1 PythonClient, 1 ClientServer, 3
-            # ClientServerConnection (1 to call sayHello, 1 that calls GC from
-            # Java to Python, 1 that receives shutdown command)
-            self.assertEqual(8, len(createdSet))
-            self.assertEqual(8, len(finalizedSet))
+            # ClientServerConnection (1 to call sayHello,
+            # 1 that receives shutdown command)
+            self.assertEqual(7, len(createdSet))
+            self.assertEqual(7, len(finalizedSet))
             self.assertEqual(createdSet, finalizedSet)
             clientserver.shutdown()
 
             # 8 objects: ClientServer (ok), PythonServer (ok), JavaClient,
             # GatewayProperty, HelloState (ok), 3 ClientServer Connections (2)
-            assert_python_memory(self, 8)
+            assert_python_memory(self, 7)

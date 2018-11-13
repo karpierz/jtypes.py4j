@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,46 +36,46 @@ import org.junit.Test;
 
 public class ClientServerTest {
 
-    @Test
-    public void testListenerClientServer() {
-        TestListener listener = new TestListener();
-        ClientServer server1 = new ClientServer(null);
-        Py4JJavaServer javaServer = server1.getJavaServer();
-        javaServer.addListener(listener);
-        server1.startServer(true);
-        try {
-            Thread.sleep(250);
-        } catch (Exception e) {
+	@Test
+	public void testListenerClientServer() {
+		TestListener listener = new TestListener();
+		ClientServer server1 = new ClientServer(null);
+		Py4JJavaServer javaServer = server1.getJavaServer();
+		javaServer.addListener(listener);
+		server1.startServer(true);
+		try {
+			Thread.sleep(250);
+		} catch (Exception e) {
 
-        }
-        server1.shutdown();
-        try {
-            Thread.sleep(250);
-        } catch (Exception e) {
+		}
+		server1.shutdown();
+		try {
+			Thread.sleep(250);
+		} catch (Exception e) {
 
-        }
-        // Started, PreShutdown, Stopped, PostShutdown
-        // But order cannot be guaranteed because two threads are competing.
-        assertTrue(listener.values.contains(new Long(1)));
-        assertTrue(listener.values.contains(new Long(10)));
-        assertTrue(listener.values.contains(new Long(1000)));
-        assertTrue(listener.values.contains(new Long(10000)));
-        assertEquals(4, listener.values.size());
-    }
+		}
+		// Started, PreShutdown, Stopped, PostShutdown
+		// But order cannot be guaranteed because two threads are competing.
+		assertTrue(listener.values.contains(new Long(1)));
+		assertTrue(listener.values.contains(new Long(10)));
+		assertTrue(listener.values.contains(new Long(1000)));
+		assertTrue(listener.values.contains(new Long(10000)));
+		assertEquals(4, listener.values.size());
+	}
 
-    @Test
-    public void testClientServerBuilder() {
-        ClientServer server = new ClientServer.ClientServerBuilder(null).javaPort(0).build();
-        Py4JJavaServer javaServer = server.getJavaServer();
-        server.startServer(true);
-        try {
-            Thread.sleep(250);
-        } catch (Exception e) {
+	@Test
+	public void testClientServerBuilder() {
+		ClientServer server = new ClientServer.ClientServerBuilder(null).javaPort(0).build();
+		Py4JJavaServer javaServer = server.getJavaServer();
+		server.startServer(true);
+		try {
+			Thread.sleep(250);
+		} catch (Exception e) {
 
-        }
-        int listeningPort = javaServer.getListeningPort();
-        assertTrue(listeningPort > 0);
-        assertTrue(javaServer.getPort() != listeningPort);
-        server.shutdown();
-    }
+		}
+		int listeningPort = javaServer.getListeningPort();
+		assertTrue(listeningPort > 0);
+		assertTrue(javaServer.getPort() != listeningPort);
+		server.shutdown();
+	}
 }

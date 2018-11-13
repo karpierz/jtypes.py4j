@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,43 +47,43 @@ import py4j.GatewayServer;
 
 public class ExampleSSLApplication {
 
-    /**
-     * @see "http://stackoverflow.com/a/34483734/42543"
-     */
-    public static void main(String[] args) throws Exception {
-        SSLContext sslContext = SSLContext.getInstance("TLS");
+	/**
+	 * @see "http://stackoverflow.com/a/34483734/42543"
+	 */
+	public static void main(String[] args) throws Exception {
+		SSLContext sslContext = SSLContext.getInstance("TLS");
 
-        char[] password = "password".toCharArray();
-        KeyStore ks = KeyStore.getInstance("JKS");
-        InputStream fis = ExampleSSLApplication.class.getClassLoader().getResourceAsStream("selfsigned.jks");
-        if (fis == null) {
-            throw new FileNotFoundException("expected a 'selfsigned.jks' keystore on the classpath");
-        }
-        ks.load(fis, password);
+		char[] password = "password".toCharArray();
+		KeyStore ks = KeyStore.getInstance("JKS");
+		InputStream fis = ExampleSSLApplication.class.getClassLoader().getResourceAsStream("selfsigned.jks");
+		if (fis == null) {
+			throw new FileNotFoundException("expected a 'selfsigned.jks' keystore on the classpath");
+		}
+		ks.load(fis, password);
 
-        // setup the key manager factory
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-        kmf.init(ks, password);
+		// setup the key manager factory
+		KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+		kmf.init(ks, password);
 
-        // setup the trust manager factory
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-        tmf.init(ks);
+		// setup the trust manager factory
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+		tmf.init(ks);
 
-        // setup the HTTPS context and parameters
-        sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+		// setup the HTTPS context and parameters
+		sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
-        GatewayServer.turnLoggingOff();
-        // Logger logger = Logger.getLogger("py4j");
-        // logger.setLevel(Level.ALL);
+		GatewayServer.turnLoggingOff();
+		// Logger logger = Logger.getLogger("py4j");
+		// logger.setLevel(Level.ALL);
 
-        GatewayServer server = new GatewayServer(new ExampleEntryPoint(), GatewayServer.DEFAULT_PORT,
-                InetAddress.getByName("localhost"), GatewayServer.DEFAULT_CONNECT_TIMEOUT,
-                GatewayServer.DEFAULT_READ_TIMEOUT, null,
-                new CallbackClient(InetAddress.getByName(CallbackClient.DEFAULT_ADDRESS),
-                        GatewayServer.DEFAULT_PYTHON_PORT,
-                        CallbackClient.DEFAULT_MIN_CONNECTION_TIME, TimeUnit.SECONDS, sslContext.getSocketFactory()),
-                sslContext.getServerSocketFactory());
-        server.start();
-    }
+		GatewayServer server = new GatewayServer(new ExampleEntryPoint(), GatewayServer.DEFAULT_PORT,
+				InetAddress.getByName("localhost"), GatewayServer.DEFAULT_CONNECT_TIMEOUT,
+				GatewayServer.DEFAULT_READ_TIMEOUT, null,
+				new CallbackClient(GatewayServer.DEFAULT_PYTHON_PORT,
+						InetAddress.getByName(CallbackClient.DEFAULT_ADDRESS),
+						CallbackClient.DEFAULT_MIN_CONNECTION_TIME, TimeUnit.SECONDS, sslContext.getSocketFactory()),
+				sslContext.getServerSocketFactory());
+		server.start();
+	}
 
 }

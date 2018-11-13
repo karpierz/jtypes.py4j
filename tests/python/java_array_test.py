@@ -9,7 +9,7 @@ import time
 import unittest
 
 from jt.py4j.java_gateway import JavaGateway
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     start_example_app_process)
 
 

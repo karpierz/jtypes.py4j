@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,45 +42,45 @@ import org.junit.Test;
 
 public class EchoServerTest {
 
-    @Test
-    public void testConnection() {
-        try {
-            Thread.sleep(250);
-            EchoServer.main(null);
-            Thread.sleep(250);
-            Socket testSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.TEST_PORT);
-            BufferedWriter testWriter = new BufferedWriter(new OutputStreamWriter(testSocket.getOutputStream()));
-            // EchoServer requires end of line character to delimit commands.
-            // Otherwise, it sometimes gets confused and can join two commands
-            // together which is bad. I (bart) don't know why this happens.
-            testWriter.write("yi7\n");
-            testWriter.flush();
-            testWriter.write("x\n");
-            testWriter.flush();
-            testWriter.close();
-            testSocket.close();
+	@Test
+	public void testConnection() {
+		try {
+			Thread.sleep(250);
+			EchoServer.main(null);
+			Thread.sleep(250);
+			Socket testSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.TEST_PORT);
+			BufferedWriter testWriter = new BufferedWriter(new OutputStreamWriter(testSocket.getOutputStream()));
+			// EchoServer requires end of line character to delimit commands.
+			// Otherwise, it sometimes gets confused and can join two commands
+			// together which is bad. I (bart) don't know why this happens.
+			testWriter.write("yi7\n");
+			testWriter.flush();
+			testWriter.write("x\n");
+			testWriter.flush();
+			testWriter.close();
+			testSocket.close();
 
-            char[] buffer = new char[4092];
-            Socket clientSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.SERVER_PORT);
-            Reader clientReader = new InputStreamReader(clientSocket.getInputStream());
-            BufferedWriter clientWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+			char[] buffer = new char[4092];
+			Socket clientSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.SERVER_PORT);
+			Reader clientReader = new InputStreamReader(clientSocket.getInputStream());
+			BufferedWriter clientWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-            clientWriter.write("c\nt\ngetExample\ne\n");
-            clientWriter.flush();
-            int count = clientReader.read(buffer);
-            assertEquals(new String(buffer, 0, count), "yi7\n");
-            clientWriter.write("c\no0\nmethod1\ni1\nbtrue\ne\n");
-            clientWriter.flush();
-            count = clientReader.read(buffer);
-            assertEquals(new String(buffer, 0, count), "x\n");
+			clientWriter.write("c\nt\ngetExample\ne\n");
+			clientWriter.flush();
+			int count = clientReader.read(buffer);
+			assertEquals(new String(buffer, 0, count), "yi7\n");
+			clientWriter.write("c\no0\nmethod1\ni1\nbtrue\ne\n");
+			clientWriter.flush();
+			count = clientReader.read(buffer);
+			assertEquals(new String(buffer, 0, count), "x\n");
 
-            clientReader.close();
-            clientWriter.close();
-            clientSocket.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+			clientReader.close();
+			clientWriter.close();
+			clientSocket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,9 +31,9 @@ package p1;
 
 public class AnObject4 extends AnObject3 implements Cloneable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 463388156514450129L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 463388156514450129L;
 
 }

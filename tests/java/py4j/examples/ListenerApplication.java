@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,27 +36,27 @@ import py4j.GatewayServer;
 
 public class ListenerApplication {
 
-    List<ExampleListener> listeners = new ArrayList<ExampleListener>();
+	List<ExampleListener> listeners = new ArrayList<ExampleListener>();
 
-    public void registerListener(ExampleListener listener) {
-        listeners.add(listener);
-    }
+	public void registerListener(ExampleListener listener) {
+		listeners.add(listener);
+	}
 
-    public void notifyAllListeners() {
-        for (ExampleListener listener : listeners) {
-            Object returnValue = listener.notify(this);
-            System.out.println(returnValue);
-        }
-    }
+	public void notifyAllListeners() {
+		for (ExampleListener listener : listeners) {
+			Object returnValue = listener.notify(this);
+			System.out.println(returnValue);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return "<ListenerApplication> instance";
-    }
+	@Override
+	public String toString() {
+		return "<ListenerApplication> instance";
+	}
 
-    public static void main(String[] args) {
-        ListenerApplication application = new ListenerApplication();
-        GatewayServer server = new GatewayServer(application);
-        server.start(true);
-    }
+	public static void main(String[] args) {
+		ListenerApplication application = new ListenerApplication();
+		GatewayServer server = new GatewayServer(application);
+		server.start(true);
+	}
 }

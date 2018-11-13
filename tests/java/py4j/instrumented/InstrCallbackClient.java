@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,27 +36,27 @@ import py4j.Py4JClientConnection;
 
 public class InstrCallbackClient extends CallbackClient {
 
-    public InstrCallbackClient(int port) {
-        super(port);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrCallbackClient(int port) {
+		super(port);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 
-    @Override
-    protected Py4JClientConnection getConnection() throws IOException {
-        Py4JClientConnection connection = null;
+	@Override
+	protected Py4JClientConnection getConnection() throws IOException {
+		Py4JClientConnection connection = null;
 
-        connection = this.connections.pollLast();
-        if (connection == null) {
-            connection = new InstrCallbackConnection(port, address, socketFactory);
-            connection.start();
-        }
+		connection = this.connections.pollLast();
+		if (connection == null) {
+			connection = new InstrCallbackConnection(port, address, socketFactory);
+			connection.start();
+		}
 
-        return connection;
-    }
+		return connection;
+	}
 }

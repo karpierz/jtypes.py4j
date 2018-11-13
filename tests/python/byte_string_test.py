@@ -6,7 +6,7 @@ import time
 
 from jt.py4j.java_gateway import JavaGateway
 from jt.py4j.protocol import smart_decode
-from .java_gateway_test import (
+from .java_gateway_test import (  # <AK> was: from py4j.tests.
     start_example_app_process, safe_shutdown)
 
 

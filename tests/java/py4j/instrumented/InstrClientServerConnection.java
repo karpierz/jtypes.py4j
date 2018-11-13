@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,15 +41,15 @@ import py4j.commands.Command;
 
 public class InstrClientServerConnection extends ClientServerConnection {
 
-    public InstrClientServerConnection(Gateway gateway, Socket socket, List<Class<? extends Command>> customCommands,
-            Py4JPythonClientPerThread pythonClient, Py4JJavaServer javaServer, int readTimeout) throws IOException {
-        super(gateway, socket, customCommands, pythonClient, javaServer, readTimeout);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrClientServerConnection(Gateway gateway, Socket socket, List<Class<? extends Command>> customCommands,
+			Py4JPythonClientPerThread pythonClient, Py4JJavaServer javaServer, int readTimeout) throws IOException {
+		super(gateway, socket, customCommands, pythonClient, javaServer, readTimeout);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 }

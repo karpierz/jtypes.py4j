@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,43 +36,43 @@ import java.util.concurrent.ConcurrentMap;
 
 public class MetricRegistry {
 
-    private final static ConcurrentMap<String, String> createdObjects = new ConcurrentHashMap<String, String>();
+	private final static ConcurrentMap<String, String> createdObjects = new ConcurrentHashMap<String, String>();
 
-    private final static ConcurrentMap<String, String> finalizedObjects = new ConcurrentHashMap<String, String>();
+	private final static ConcurrentMap<String, String> finalizedObjects = new ConcurrentHashMap<String, String>();
 
-    public static void addCreatedObject(Object obj) {
-        String str = obj.toString();
-        createdObjects.put(str, str);
-    }
+	public static void addCreatedObject(Object obj) {
+		String str = obj.toString();
+		createdObjects.put(str, str);
+	}
 
-    public static void addFinalizedObject(Object obj) {
-        String str = obj.toString();
-        finalizedObjects.put(str, str);
-    }
+	public static void addFinalizedObject(Object obj) {
+		String str = obj.toString();
+		finalizedObjects.put(str, str);
+	}
 
-    public static Set<String> getCreatedObjectsKeySet() {
-        return Collections.unmodifiableSet(createdObjects.keySet());
-    }
+	public static Set<String> getCreatedObjectsKeySet() {
+		return Collections.unmodifiableSet(createdObjects.keySet());
+	}
 
-    public static Set<String> getFinalizedObjectsKeySet() {
-        return Collections.unmodifiableSet(finalizedObjects.keySet());
-    }
+	public static Set<String> getFinalizedObjectsKeySet() {
+		return Collections.unmodifiableSet(finalizedObjects.keySet());
+	}
 
-    public static void forceFinalization() {
-        // Try to call System.gc() and System.runFinalizers()
-        // Multiple times to increase likelihood of finalization.
-        for (int i = 0; i < 10; i++) {
-            System.gc();
-            System.runFinalization();
-        }
-    }
+	public static void forceFinalization() {
+		// Try to call System.gc() and System.runFinalizers()
+		// Multiple times to increase likelihood of finalization.
+		for (int i = 0; i < 10; i++) {
+			System.gc();
+			System.runFinalization();
+		}
+	}
 
-    public static void sleep() {
-        try {
-            Thread.currentThread().sleep(2000);
-        } catch (Exception e) {
+	public static void sleep() {
+		try {
+			Thread.currentThread().sleep(2000);
+		} catch (Exception e) {
 
-        }
-    }
+		}
+	}
 
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,30 +38,30 @@ import py4j.examples.BufferGenerator;
 
 public class BufferGatewayTest {
 
-    @Test
-    public void testBufferedGateway1() {
-        EchoClient client = new EchoClient();
+	@Test
+	public void testBufferedGateway1() {
+		EchoClient client = new EchoClient();
 
-        try {
-            Thread.sleep(500);
-            BufferGenerator.main(null);
+		try {
+			Thread.sleep(500);
+			BufferGenerator.main(null);
 
-            Thread.sleep(500);
-            client.connect();
+			Thread.sleep(500);
+			client.connect();
 
-            client.write("c\nt\ngetStringBuffer\ne\n");
-            assertEquals(client.getResponse(), "!yro0\n");
-            client.write("c\no0\nappend\nd1.1\ne\n");
-            assertEquals(client.getResponse(), "!yro1\n");
-            client.write("c\no0\ntoString\ne\n");
-            assertEquals(client.getResponse(), "!ysFromJava1.1\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        } finally {
-            client.close();
-            BufferGenerator.shutdownGateway();
-        }
-    }
+			client.write("c\nt\ngetStringBuffer\ne\n");
+			assertEquals(client.getResponse(), "!yro0\n");
+			client.write("c\no0\nappend\nd1.1\ne\n");
+			assertEquals(client.getResponse(), "!yro1\n");
+			client.write("c\no0\ntoString\ne\n");
+			assertEquals(client.getResponse(), "!ysFromJava1.1\n");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		} finally {
+			client.close();
+			BufferGenerator.shutdownGateway();
+		}
+	}
 
 }

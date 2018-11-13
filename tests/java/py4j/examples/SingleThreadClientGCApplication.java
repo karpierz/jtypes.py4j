@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,18 +37,18 @@ import py4j.GatewayServer;
  */
 public class SingleThreadClientGCApplication {
 
-    public static void main(String[] args) {
-        GatewayServer.turnLoggingOff();
-        ClientServer clientServer = new ClientServer(null);
-        IHelloObject hello = (IHelloObject) clientServer.getPythonServerEntryPoint(new Class[] { IHelloObject.class });
-        try {
-            for (int i = 0; i < 1000; i++) {
-                hello.sendObject(new Object(), new Object());
-            }
+	public static void main(String[] args) {
+		GatewayServer.turnLoggingOff();
+		ClientServer clientServer = new ClientServer(null);
+		IHelloObject hello = (IHelloObject) clientServer.getPythonServerEntryPoint(new Class[] { IHelloObject.class });
+		try {
+			for (int i = 0; i < 1000; i++) {
+				hello.sendObject(new Object(), new Object());
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        clientServer.shutdown();
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		clientServer.shutdown();
+	}
 }

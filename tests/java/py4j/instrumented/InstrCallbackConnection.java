@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,15 +37,15 @@ import py4j.CallbackConnection;
 
 public class InstrCallbackConnection extends CallbackConnection {
 
-    public InstrCallbackConnection(int port, InetAddress address, SocketFactory socketFactory) {
-        super(port, address, socketFactory);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrCallbackConnection(int port, InetAddress address, SocketFactory socketFactory) {
+		super(port, address, socketFactory);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 
 }

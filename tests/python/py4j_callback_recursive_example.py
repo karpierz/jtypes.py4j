@@ -1,3 +1,5 @@
+from __future__ import absolute_import  # <AK> added
+
 class HelloState(object):
     def __init__(self):
         self.calls = []

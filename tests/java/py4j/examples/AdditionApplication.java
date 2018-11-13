@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,14 +33,14 @@ import py4j.GatewayServer;
 
 public class AdditionApplication {
 
-    public int addition(int first, int second) {
-        return first + second;
-    }
+	public int addition(int first, int second) {
+		return first + second;
+	}
 
-    public static void main(String[] args) {
-        AdditionApplication app = new AdditionApplication();
-        GatewayServer server = new GatewayServer(app);
-        server.start();
-    }
+	public static void main(String[] args) {
+		AdditionApplication app = new AdditionApplication();
+		GatewayServer server = new GatewayServer(app);
+		server.start();
+	}
 
 }

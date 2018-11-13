@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, absolute_import
 
 
-from .java_gateway_test import gateway, example_app_process
+from .java_gateway_test import gateway, example_app_process  # <AK> was: from py4j.tests.
 
 
 def test_help_object():

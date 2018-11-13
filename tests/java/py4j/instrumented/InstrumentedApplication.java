@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,40 +34,40 @@ import py4j.examples.IHello;
 
 public class InstrumentedApplication {
 
-    public void startServer2() {
-        InstrGatewayServer server2 = new InstrGatewayServer(this, GatewayServer.DEFAULT_PORT + 5,
-                GatewayServer.DEFAULT_PYTHON_PORT + 5);
-        server2.start();
-    }
+	public void startServer2() {
+		InstrGatewayServer server2 = new InstrGatewayServer(this, GatewayServer.DEFAULT_PORT + 5,
+				GatewayServer.DEFAULT_PYTHON_PORT + 5);
+		server2.start();
+	}
 
-    private void sayHello(GatewayServer server) {
-        IHello hello = (IHello) server.getPythonServerEntryPoint(new Class[] { IHello.class });
-        try {
-            hello.sayHello();
-            hello.sayHello(2, "Hello World");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	private void sayHello(GatewayServer server) {
+		IHello hello = (IHello) server.getPythonServerEntryPoint(new Class[] { IHello.class });
+		try {
+			hello.sayHello();
+			hello.sayHello(2, "Hello World");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void startServerWithPythonEntry(boolean shutdown) {
-        InstrGatewayServer server2 = new InstrGatewayServer(this, GatewayServer.DEFAULT_PORT + 5,
-                GatewayServer.DEFAULT_PYTHON_PORT + 5);
-        server2.start();
+	public void startServerWithPythonEntry(boolean shutdown) {
+		InstrGatewayServer server2 = new InstrGatewayServer(this, GatewayServer.DEFAULT_PORT + 5,
+				GatewayServer.DEFAULT_PYTHON_PORT + 5);
+		server2.start();
 
-        sayHello(server2);
+		sayHello(server2);
 
-        MetricRegistry.forceFinalization();
-        MetricRegistry.sleep();
+		MetricRegistry.forceFinalization();
+		MetricRegistry.sleep();
 
-        if (shutdown) {
-            server2.shutdown();
-        }
-    }
+		if (shutdown) {
+			server2.shutdown();
+		}
+	}
 
-    public static void main(String[] args) {
-        InstrumentedApplication app = new InstrumentedApplication();
-        GatewayServer server = new GatewayServer(app);
-        server.start();
-    }
+	public static void main(String[] args) {
+		InstrumentedApplication app = new InstrumentedApplication();
+		GatewayServer server = new GatewayServer(app);
+		server.start();
+	}
 }

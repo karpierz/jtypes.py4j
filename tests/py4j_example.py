@@ -3,6 +3,8 @@ Created on Dec 19, 2009
 
 @author: barthelemy
 """
+from __future__ import absolute_import  # <AK> added
+
 from jt.py4j.java_gateway import JavaGateway
 
 if __name__ == "__main__":

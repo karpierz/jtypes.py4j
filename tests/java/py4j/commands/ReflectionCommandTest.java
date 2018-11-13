@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,115 +45,115 @@ import py4j.Gateway;
 import py4j.examples.ExampleEntryPoint;
 
 public class ReflectionCommandTest {
-    private Gateway gateway;
-    private ReflectionCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
+	private Gateway gateway;
+	private ReflectionCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
 
-    @Before
-    public void setUp() {
-        gateway = new Gateway(new ExampleEntryPoint());
-        gateway.startup();
-        command = new ReflectionCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
+	@Before
+	public void setUp() {
+		gateway = new Gateway(new ExampleEntryPoint());
+		gateway.startup();
+		command = new ReflectionCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
 
-    }
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testUnknown() {
-        String inputCommand1 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java" + "\nrj\ne\n";
-        String inputCommand2 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java.lang" + "\nrj\ne\n";
-        String inputCommand3 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java.lang.String" + "\nrj\ne\n";
-        String inputCommand4 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "p1.Cat" + "\nrj\ne\n";
-        String inputCommand5 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "byte" + "\nrj\ne\n";
-        String inputCommand6 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "System" + "\nrj\ne\n";
-        String inputCommand7 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "File" + "\nrj\ne\n";
-        try {
-            this.gateway.getDefaultJVMView().addSingleImport("java.util.List");
-            this.gateway.getDefaultJVMView().addStarImport("java.io.*");
-            command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
-            assertEquals("!yp\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
-            assertEquals("!yp\n!yp\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand3)), writer);
-            assertEquals("!yp\n!yp\n!ycjava.lang.String\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand4)), writer);
-            assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand5)), writer);
-            assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n!ycbyte\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand6)), writer);
-            assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n!ycbyte\n!ycjava.lang.System\n",
-                    sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand7)), writer);
-            assertEquals(
-                    "!yp\n!yp\n!ycjava.lang.String\n!ycp1" + ".Cat\n!ycbyte\n!ycjava.lang.System\n!ycjava.io.File\n",
-                    sWriter.toString());
+	@Test
+	public void testUnknown() {
+		String inputCommand1 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java" + "\nrj\ne\n";
+		String inputCommand2 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java.lang" + "\nrj\ne\n";
+		String inputCommand3 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "java.lang.String" + "\nrj\ne\n";
+		String inputCommand4 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "p1.Cat" + "\nrj\ne\n";
+		String inputCommand5 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "byte" + "\nrj\ne\n";
+		String inputCommand6 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "System" + "\nrj\ne\n";
+		String inputCommand7 = ReflectionCommand.GET_UNKNOWN_SUB_COMMAND_NAME + "\n" + "File" + "\nrj\ne\n";
+		try {
+			this.gateway.getDefaultJVMView().addSingleImport("java.util.List");
+			this.gateway.getDefaultJVMView().addStarImport("java.io.*");
+			command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
+			assertEquals("!yp\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
+			assertEquals("!yp\n!yp\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand3)), writer);
+			assertEquals("!yp\n!yp\n!ycjava.lang.String\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand4)), writer);
+			assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand5)), writer);
+			assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n!ycbyte\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand6)), writer);
+			assertEquals("!yp\n!yp\n!ycjava.lang.String\n!ycp1.Cat\n!ycbyte\n!ycjava.lang.System\n",
+					sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand7)), writer);
+			assertEquals(
+					"!yp\n!yp\n!ycjava.lang.String\n!ycp1" + ".Cat\n!ycbyte\n!ycjava.lang.System\n!ycjava.io.File\n",
+					sWriter.toString());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testJavaLangClass() {
-        String inputCommand1 = ReflectionCommand.GET_JAVA_LANG_CLASS_SUB_COMMAND_NAME + "\n" + "java.lang.String\ne\n";
-        String inputCommand2 = ReflectionCommand.GET_JAVA_LANG_CLASS_SUB_COMMAND_NAME + "\n" + "java.lang"
-                + ".FOOOOO\ne\n"; // does not exist
-        try {
-            command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
-            assertEquals("!yro0\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
-            assertEquals("!yro0\n!xsThe class java.lang.FOOOOO does not exist.\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testJavaLangClass() {
+		String inputCommand1 = ReflectionCommand.GET_JAVA_LANG_CLASS_SUB_COMMAND_NAME + "\n" + "java.lang.String\ne\n";
+		String inputCommand2 = ReflectionCommand.GET_JAVA_LANG_CLASS_SUB_COMMAND_NAME + "\n" + "java.lang"
+				+ ".FOOOOO\ne\n"; // does not exist
+		try {
+			command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
+			assertEquals("!yro0\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
+			assertEquals("!yro0\n!xsThe class java.lang.FOOOOO does not exist.\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testMember() {
-        String inputCommand1 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "java.lang.String\n" + "valueOf"
-                + "\ne\n";
-        String inputCommand2 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "java.lang.String\n" + "length"
-                + "\ne\n";
-        String inputCommand3 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow" + "\ne\n";
-        String inputCommand4 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow20" + "\ne\n"; // does not exist
-        String inputCommand5 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow15" + "\ne\n";
-        String inputCommand6 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "CONSTANT" + "\ne\n";
-        try {
-            command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
-            assertEquals("!ym\n", sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
-            assertEquals("!ym\n!xsTrying to access a non-static member from a " + "static context.\n",
-                    sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand3)), writer);
-            assertEquals(
-                    "!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n",
-                    sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand4)), writer);
-            assertEquals(
-                    "!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n",
-                    sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand5)), writer);
-            assertEquals(
-                    "!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n!ym\n",
-                    sWriter.toString());
-            command.execute("r", new BufferedReader(new StringReader(inputCommand6)), writer);
-            assertEquals(
-                    "!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n!ym\n!ysSalut!\n",
-                    sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
+	@Test
+	public void testMember() {
+		String inputCommand1 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "java.lang.String\n" + "valueOf"
+				+ "\ne\n";
+		String inputCommand2 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "java.lang.String\n" + "length"
+				+ "\ne\n";
+		String inputCommand3 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow" + "\ne\n";
+		String inputCommand4 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow20" + "\ne\n"; // does not exist
+		String inputCommand5 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "meow15" + "\ne\n";
+		String inputCommand6 = ReflectionCommand.GET_MEMBER_SUB_COMMAND_NAME + "\n" + "p1.Cat\n" + "CONSTANT" + "\ne\n";
+		try {
+			command.execute("r", new BufferedReader(new StringReader(inputCommand1)), writer);
+			assertEquals("!ym\n", sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand2)), writer);
+			assertEquals("!ym\n!xsTrying to access a non-static member from a " + "static context.\n",
+					sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand3)), writer);
+			assertEquals(
+					"!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n",
+					sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand4)), writer);
+			assertEquals(
+					"!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n",
+					sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand5)), writer);
+			assertEquals(
+					"!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n!ym\n",
+					sWriter.toString());
+			command.execute("r", new BufferedReader(new StringReader(inputCommand6)), writer);
+			assertEquals(
+					"!ym\n!xsTrying to access a non-static member from a static context.\n!xsTrying to access a non-static member from a static context.\n!x\n!ym\n!ysSalut!\n",
+					sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
 
-    }
+	}
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,33 +40,33 @@ import org.junit.Test;
 
 public class EchoClientTest {
 
-    @Test
-    public void testConnection() {
-        try {
-            Thread.sleep(500);
-            EchoServer.main(null);
-            Thread.sleep(500);
-            Socket testSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.TEST_PORT);
-            BufferedWriter testWriter = new BufferedWriter(new OutputStreamWriter(testSocket.getOutputStream()));
-            testWriter.write("yi7\n");
-            testWriter.flush();
-            testWriter.write("x\n");
-            testWriter.flush();
-            testWriter.close();
-            testSocket.close();
+	@Test
+	public void testConnection() {
+		try {
+			Thread.sleep(500);
+			EchoServer.main(null);
+			Thread.sleep(500);
+			Socket testSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, EchoServer.TEST_PORT);
+			BufferedWriter testWriter = new BufferedWriter(new OutputStreamWriter(testSocket.getOutputStream()));
+			testWriter.write("yi7\n");
+			testWriter.flush();
+			testWriter.write("x\n");
+			testWriter.flush();
+			testWriter.close();
+			testSocket.close();
 
-            EchoClient client = new EchoClient();
-            client.connect();
-            client.write("c\ng\ngetExample\ne\n");
-            assertEquals(client.getResponse(), "yi7\n");
-            client.write("c\no1\nmethod1\ni1\nbtrue\ne\n");
-            assertEquals(client.getResponse(), "x\n");
-            client.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        } finally {
+			EchoClient client = new EchoClient();
+			client.connect();
+			client.write("c\ng\ngetExample\ne\n");
+			assertEquals(client.getResponse(), "yi7\n");
+			client.write("c\no1\nmethod1\ni1\nbtrue\ne\n");
+			assertEquals(client.getResponse(), "x\n");
+			client.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		} finally {
 
-        }
-    }
+		}
+	}
 }

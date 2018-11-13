@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,113 +46,113 @@ import py4j.examples.ExampleClass;
 import py4j.examples.ExampleEntryPoint;
 
 public class HelpPageCommandTest {
-    private ExampleEntryPoint entryPoint;
-    private Gateway gateway;
-    private HelpPageCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
-    private String target;
+	private ExampleEntryPoint entryPoint;
+	private Gateway gateway;
+	private HelpPageCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
+	private String target;
 
-    @Before
-    public void setUp() {
-        entryPoint = new ExampleEntryPoint();
-        gateway = new Gateway(entryPoint);
-        gateway.startup();
-        command = new HelpPageCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
-        target = gateway.getReturnObject(entryPoint.getNewExample()).getName();
-    }
+	@Before
+	public void setUp() {
+		entryPoint = new ExampleEntryPoint();
+		gateway = new Gateway(entryPoint);
+		gateway.startup();
+		command = new HelpPageCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
+		target = gateway.getReturnObject(entryPoint.getNewExample()).getName();
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testHelpObject() {
-        String inputCommand = "o\n" + target + "\nn\ntrue\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
-            String page = sWriter.toString();
-            System.out.println(page);
-            assertTrue(page.length() > 1);
-            assertTrue(page.contains("method1"));
-            assertTrue(page.contains("getField1"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testHelpObject() {
+		String inputCommand = "o\n" + target + "\nn\ntrue\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
+			String page = sWriter.toString();
+			System.out.println(page);
+			assertTrue(page.length() > 1);
+			assertTrue(page.contains("method1"));
+			assertTrue(page.contains("getField1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testHelpObjectWithPattern() {
-        String inputCommand = "o\n" + target + "\nsm*\ntrue\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
-            String page = sWriter.toString();
-            System.out.println(page);
-            assertTrue(page.length() > 1);
-            assertTrue(page.contains("method1"));
-            assertTrue(!page.contains("getField1"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testHelpObjectWithPattern() {
+		String inputCommand = "o\n" + target + "\nsm*\ntrue\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
+			String page = sWriter.toString();
+			System.out.println(page);
+			assertTrue(page.length() > 1);
+			assertTrue(page.contains("method1"));
+			assertTrue(!page.contains("getField1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testHelpObjectWithPattern2() {
-        String inputCommand = "o\n" + target + "\nsgetField1(*\ntrue\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
-            String page = sWriter.toString();
-            System.out.println(page);
-            assertTrue(page.length() > 1);
-            assertTrue(!page.contains("method1"));
-            assertTrue(page.contains("getField1"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testHelpObjectWithPattern2() {
+		String inputCommand = "o\n" + target + "\nsgetField1(*\ntrue\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
+			String page = sWriter.toString();
+			System.out.println(page);
+			assertTrue(page.length() > 1);
+			assertTrue(!page.contains("method1"));
+			assertTrue(page.contains("getField1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testHelpClass() {
-        String inputCommand = "c\n" + ExampleClass.class.getName() + "\nn\ntrue\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
-            String page = sWriter.toString();
-            System.out.println(page);
-            assertTrue(page.length() > 1);
-            assertTrue(page.contains("method1"));
-            assertTrue(page.contains("getField1"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testHelpClass() {
+		String inputCommand = "c\n" + ExampleClass.class.getName() + "\nn\ntrue\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
+			String page = sWriter.toString();
+			System.out.println(page);
+			assertTrue(page.length() > 1);
+			assertTrue(page.contains("method1"));
+			assertTrue(page.contains("getField1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testHelpClassPattern() {
-        String inputCommand = "c\n" + ExampleClass.class.getName() + "\nsm*\ntrue\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
-            String page = sWriter.toString();
-            System.out.println(page);
-            assertTrue(page.length() > 1);
-            assertTrue(page.contains("method1"));
-            assertTrue(!page.contains("getField1"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testHelpClassPattern() {
+		String inputCommand = "c\n" + ExampleClass.class.getName() + "\nsm*\ntrue\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("h", new BufferedReader(new StringReader(inputCommand)), writer);
+			String page = sWriter.toString();
+			System.out.println(page);
+			assertTrue(page.length() > 1);
+			assertTrue(page.contains("method1"));
+			assertTrue(!page.contains("getField1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 }

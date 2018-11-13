@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,17 +35,17 @@ import py4j.GatewayServer;
 
 public class ListPrinter {
 
-    public String getListAsString(List<?> list) {
-        StringBuffer sb = new StringBuffer();
-        for (Object o : list) {
-            sb.append(o.toString());
-        }
-        return sb.toString();
-    }
+	public String getListAsString(List<?> list) {
+		StringBuffer sb = new StringBuffer();
+		for (Object o : list) {
+			sb.append(o.toString());
+		}
+		return sb.toString();
+	}
 
-    public static void main(String[] args) {
-        GatewayServer server = new GatewayServer(new ListPrinter());
-        server.start();
-    }
+	public static void main(String[] args) {
+		GatewayServer server = new GatewayServer(new ListPrinter());
+		server.start();
+	}
 
 }

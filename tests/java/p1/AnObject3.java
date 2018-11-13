@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,15 +33,15 @@ import java.io.Serializable;
 
 public class AnObject3 implements Runnable, Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -5574602071319098058L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5574602071319098058L;
 
-    @Override
-    public void run() {
-        // TODO Auto-generated method stub
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

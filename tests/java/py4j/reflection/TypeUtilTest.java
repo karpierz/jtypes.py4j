@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,34 +35,34 @@ import org.junit.Test;
 
 public class TypeUtilTest {
 
-    @Test
-    public void testDistance() {
-        assertEquals(0, TypeUtil.computeDistance(ATest.class, ATest.class));
-        assertEquals(100, TypeUtil.computeDistance(ATest.class, BTest.class));
-        assertEquals(200, TypeUtil.computeDistance(ATest.class, CTest.class));
-        assertEquals(300, TypeUtil.computeDistance(ATest.class, DTest.class));
-        assertEquals(400, TypeUtil.computeDistance(Object.class, DTest.class));
-        assertEquals(-1, TypeUtil.computeDistance(int.class, DTest.class));
-        assertEquals(-1, TypeUtil.computeDistance(String.class, DTest.class));
-        assertEquals(100, TypeUtil.computeDistance(I0Test.class, I1Test.class));
-        assertEquals(100, TypeUtil.computeDistance(I0Test.class, VTest.class));
-        assertEquals(200, TypeUtil.computeDistance(I0Test.class, WTest.class));
-        assertEquals(100, TypeUtil.computeDistance(I1Test.class, WTest.class));
-        assertEquals(100, TypeUtil.computeDistance(I0Test.class, XTest.class));
-        assertEquals(200, TypeUtil.computeDistance(I0Test.class, YTest.class));
-        assertEquals(300, TypeUtil.computeDistance(J0Test.class, YTest.class));
-        assertEquals(400, TypeUtil.computeDistance(I0Test.class, ZTest.class));
-    }
+	@Test
+	public void testDistance() {
+		assertEquals(0, TypeUtil.computeDistance(ATest.class, ATest.class));
+		assertEquals(100, TypeUtil.computeDistance(ATest.class, BTest.class));
+		assertEquals(200, TypeUtil.computeDistance(ATest.class, CTest.class));
+		assertEquals(300, TypeUtil.computeDistance(ATest.class, DTest.class));
+		assertEquals(400, TypeUtil.computeDistance(Object.class, DTest.class));
+		assertEquals(-1, TypeUtil.computeDistance(int.class, DTest.class));
+		assertEquals(-1, TypeUtil.computeDistance(String.class, DTest.class));
+		assertEquals(100, TypeUtil.computeDistance(I0Test.class, I1Test.class));
+		assertEquals(100, TypeUtil.computeDistance(I0Test.class, VTest.class));
+		assertEquals(200, TypeUtil.computeDistance(I0Test.class, WTest.class));
+		assertEquals(100, TypeUtil.computeDistance(I1Test.class, WTest.class));
+		assertEquals(100, TypeUtil.computeDistance(I0Test.class, XTest.class));
+		assertEquals(200, TypeUtil.computeDistance(I0Test.class, YTest.class));
+		assertEquals(300, TypeUtil.computeDistance(J0Test.class, YTest.class));
+		assertEquals(400, TypeUtil.computeDistance(I0Test.class, ZTest.class));
+	}
 
-    @Test
-    public void testIsInstance() {
-        Object object = new ZTest();
-        assertTrue(TypeUtil.isInstanceOf(I0Test.class, object));
-        assertTrue(TypeUtil.isInstanceOf("py4j.reflection.I0Test", object));
-        object = new ATest();
-        assertFalse(TypeUtil.isInstanceOf(I0Test.class, object));
-        assertFalse(TypeUtil.isInstanceOf("py4j.reflection.I0Test", object));
-    }
+	@Test
+	public void testIsInstance() {
+		Object object = new ZTest();
+		assertTrue(TypeUtil.isInstanceOf(I0Test.class, object));
+		assertTrue(TypeUtil.isInstanceOf("py4j.reflection.I0Test", object));
+		object = new ATest();
+		assertFalse(TypeUtil.isInstanceOf(I0Test.class, object));
+		assertFalse(TypeUtil.isInstanceOf("py4j.reflection.I0Test", object));
+	}
 }
 
 class ATest {

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,126 +46,126 @@ import py4j.examples.ExampleClass;
 import py4j.examples.ExampleEntryPoint;
 
 public class FieldCommandTest {
-    private ExampleEntryPoint entryPoint;
-    private Gateway gateway;
-    private FieldCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
-    private String target;
+	private ExampleEntryPoint entryPoint;
+	private Gateway gateway;
+	private FieldCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
+	private String target;
 
-    @Before
-    public void setUp() {
-        entryPoint = new ExampleEntryPoint();
-        gateway = new Gateway(entryPoint);
-        gateway.startup();
-        command = new FieldCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
-        target = gateway.putNewObject(entryPoint.getNewExample());
-    }
+	@Before
+	public void setUp() {
+		entryPoint = new ExampleEntryPoint();
+		gateway = new Gateway(entryPoint);
+		gateway.startup();
+		command = new FieldCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
+		target = gateway.putNewObject(entryPoint.getNewExample());
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testPrivateMember() {
-        String inputCommand = "g\n" + target + "\nfield1\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yo\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testPrivateMember() {
+		String inputCommand = "g\n" + target + "\nfield1\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yo\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testNoMember() {
-        String inputCommand = "g\n" + target + "\nfield2\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yo\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testNoMember() {
+		String inputCommand = "g\n" + target + "\nfield2\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yo\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testPrimitive() {
-        String inputCommand = "g\n" + target + "\nfield10\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yi10\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testPrimitive() {
+		String inputCommand = "g\n" + target + "\nfield10\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yi10\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testObject() {
-        String inputCommand = "g\n" + target + "\nfield20\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yro1\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testObject() {
+		String inputCommand = "g\n" + target + "\nfield20\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yro1\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testNull() {
-        String inputCommand = "g\n" + target + "\nfield21\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yn\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testNull() {
+		String inputCommand = "g\n" + target + "\nfield21\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yn\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testSetField() {
-        String inputCommand = "s\n" + target + "\nfield10\ni123\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yv\n", sWriter.toString());
-            assertEquals(((ExampleClass) gateway.getObject(target)).field10, 123);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testSetField() {
+		String inputCommand = "s\n" + target + "\nfield10\ni123\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yv\n", sWriter.toString());
+			assertEquals(((ExampleClass) gateway.getObject(target)).field10, 123);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testSetNoField() {
-        String inputCommand = "s\n" + target + "\nfield1\ni123\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yo\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testSetNoField() {
+		String inputCommand = "s\n" + target + "\nfield1\ni123\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yo\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
-    @Test
-    public void testSetFieldObject() {
-        String objectId = gateway.putNewObject(new StringBuffer("Hello"));
-        String inputCommand = "s\n" + target + "\nfield20\nr" + objectId + "\ne\n";
-        try {
-            command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yv\n", sWriter.toString());
-            assertEquals(((ExampleClass) gateway.getObject(target)).field20, gateway.getObject(objectId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testSetFieldObject() {
+		String objectId = gateway.putNewObject(new StringBuffer("Hello"));
+		String inputCommand = "s\n" + target + "\nfield20\nr" + objectId + "\ne\n";
+		try {
+			command.execute("f", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yv\n", sWriter.toString());
+			assertEquals(((ExampleClass) gateway.getObject(target)).field20, gateway.getObject(objectId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,19 +38,19 @@ import p1.Cat;
 
 public class MethodDescriptorTest {
 
-    @Test
-    public void testInternalRepresentation() {
-        try {
-            MethodDescriptor mDesc1 = new MethodDescriptor("meowmeow", Cat.class, new Class[] { String.class });
-            MethodDescriptor mDesc2 = new MethodDescriptor("meowmeow", Cat.class, new Class[] { String.class });
-            assertEquals(mDesc1, mDesc2);
-            assertEquals(mDesc1.hashCode(), mDesc2.hashCode());
-            assertEquals(mDesc1.getInternalRepresentation(), "p1.Cat.meowmeow(java.lang.String.)");
-            assertEquals(mDesc1.toString(), "p1.Cat.meowmeow(java.lang.String.)");
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testInternalRepresentation() {
+		try {
+			MethodDescriptor mDesc1 = new MethodDescriptor("meowmeow", Cat.class, new Class[] { String.class });
+			MethodDescriptor mDesc2 = new MethodDescriptor("meowmeow", Cat.class, new Class[] { String.class });
+			assertEquals(mDesc1, mDesc2);
+			assertEquals(mDesc1.hashCode(), mDesc2.hashCode());
+			assertEquals(mDesc1.getInternalRepresentation(), "p1.Cat.meowmeow(java.lang.String.)");
+			assertEquals(mDesc1.toString(), "p1.Cat.meowmeow(java.lang.String.)");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 }

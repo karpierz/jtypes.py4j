@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,57 +39,57 @@ import java.net.Socket;
 
 public class PythonTestClient implements Runnable {
 
-    public volatile String lastProxyMessage;
-    public volatile String lastReturnMessage;
-    public volatile String nextProxyReturnMessage;
+	public volatile String lastProxyMessage;
+	public volatile String lastReturnMessage;
+	public volatile String nextProxyReturnMessage;
 
-    private ServerSocket sSocket;
+	private ServerSocket sSocket;
 
-    public void startProxy() {
-        new Thread(this).start();
-    }
+	public void startProxy() {
+		new Thread(this).start();
+	}
 
-    public void run() {
-        try {
-            sSocket = new ServerSocket(25334);
-            Socket socket = sSocket.accept();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            lastProxyMessage = "";
-            String temp = reader.readLine() + "\n";
-            lastProxyMessage += temp;
-            while (!temp.equals("e\n")) {
-                temp = reader.readLine() + "\n";
-                lastProxyMessage += temp;
-            }
-            writer.write(nextProxyReturnMessage);
-            writer.flush();
-            writer.close();
-            reader.close();
-            socket.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void run() {
+		try {
+			sSocket = new ServerSocket(25334);
+			Socket socket = sSocket.accept();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			lastProxyMessage = "";
+			String temp = reader.readLine() + "\n";
+			lastProxyMessage += temp;
+			while (!temp.equals("e\n")) {
+				temp = reader.readLine() + "\n";
+				lastProxyMessage += temp;
+			}
+			writer.write(nextProxyReturnMessage);
+			writer.flush();
+			writer.close();
+			reader.close();
+			socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void stopProxy() {
-        NetworkUtil.quietlyClose(sSocket);
-    }
+	public void stopProxy() {
+		NetworkUtil.quietlyClose(sSocket);
+	}
 
-    public void sendMesage(String message) {
-        try {
-            Socket socket = new Socket(InetAddress.getByName(GatewayServer.DEFAULT_ADDRESS), 25333);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            writer.write(message);
-            writer.flush();
-            lastReturnMessage = reader.readLine();
-            writer.close();
-            reader.close();
-            socket.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void sendMesage(String message) {
+		try {
+			Socket socket = new Socket(InetAddress.getByName(GatewayServer.DEFAULT_ADDRESS), 25333);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			writer.write(message);
+			writer.flush();
+			lastReturnMessage = reader.readLine();
+			writer.close();
+			reader.close();
+			socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

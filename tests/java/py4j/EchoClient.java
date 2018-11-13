@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,44 +39,44 @@ import java.nio.charset.Charset;
 
 public class EchoClient {
 
-    private int port = EchoServer.SERVER_PORT;
+	private int port = EchoServer.SERVER_PORT;
 
-    private Socket clientSocket;
+	private Socket clientSocket;
 
-    private Reader reader;
+	private Reader reader;
 
-    private BufferedWriter writer;
+	private BufferedWriter writer;
 
-    private char[] buffer = new char[4092];
+	private char[] buffer = new char[4092];
 
-    public int getPort() {
-        return port;
-    }
+	public int getPort() {
+		return port;
+	}
 
-    public void setPort(int port) {
-        this.port = port;
-    }
+	public void setPort(int port) {
+		this.port = port;
+	}
 
-    public void write(String command) throws IOException {
-        writer.write(command);
-        writer.flush();
-    }
+	public void write(String command) throws IOException {
+		writer.write(command);
+		writer.flush();
+	}
 
-    public String getResponse() throws IOException {
-        int count = reader.read(buffer);
-        return new String(buffer, 0, count);
-    }
+	public String getResponse() throws IOException {
+		int count = reader.read(buffer);
+		return new String(buffer, 0, count);
+	}
 
-    public void connect() throws IOException {
-        clientSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, port);
-        reader = new InputStreamReader(clientSocket.getInputStream(), Charset.forName("UTF-8"));
-        writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), Charset.forName("UTF-8")));
-    }
+	public void connect() throws IOException {
+		clientSocket = new Socket(GatewayServer.DEFAULT_ADDRESS, port);
+		reader = new InputStreamReader(clientSocket.getInputStream(), Charset.forName("UTF-8"));
+		writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), Charset.forName("UTF-8")));
+	}
 
-    public void close() {
-        NetworkUtil.quietlyClose(clientSocket);
-        NetworkUtil.quietlyClose(reader);
-        NetworkUtil.quietlyClose(writer);
-    }
+	public void close() {
+		NetworkUtil.quietlyClose(clientSocket);
+		NetworkUtil.quietlyClose(reader);
+		NetworkUtil.quietlyClose(writer);
+	}
 
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,40 +35,40 @@ import org.junit.Test;
 
 public class StringUtilTest {
 
-    @Test
-    public void testEmptyString() {
-        assertEquals("", StringUtil.unescape(""));
-    }
+	@Test
+	public void testEmptyString() {
+		assertEquals("", StringUtil.unescape(""));
+	}
 
-    @Test
-    public void testNoEscape() {
-        assertEquals("Hello", StringUtil.unescape("Hello"));
-        assertEquals("Hello World!", StringUtil.unescape("Hello World!"));
-        assertEquals("Hello\tWorld!\"", StringUtil.unescape("Hello\tWorld!\""));
-    }
+	@Test
+	public void testNoEscape() {
+		assertEquals("Hello", StringUtil.unescape("Hello"));
+		assertEquals("Hello World!", StringUtil.unescape("Hello World!"));
+		assertEquals("Hello\tWorld!\"", StringUtil.unescape("Hello\tWorld!\""));
+	}
 
-    @Test
-    public void testWithEscape() {
-        assertEquals("Hello\\World!", StringUtil.unescape("Hello\\\\World!"));
-        assertEquals("Hello \\\\World!", StringUtil.unescape("Hello \\\\\\\\World!"));
-    }
+	@Test
+	public void testWithEscape() {
+		assertEquals("Hello\\World!", StringUtil.unescape("Hello\\\\World!"));
+		assertEquals("Hello \\\\World!", StringUtil.unescape("Hello \\\\\\\\World!"));
+	}
 
-    @Test
-    public void testWithLineBreaks() {
-        assertEquals("Hello\\nWorld!", StringUtil.unescape("Hello\\\\nWorld!"));
-        assertEquals("Hello\nWorld!", StringUtil.unescape("Hello\\nWorld!"));
-        assertEquals("Hello\\\nWorld!", StringUtil.unescape("Hello\\\\\\nWorld!"));
-        assertEquals("\rHello\\\nWorld!", StringUtil.unescape("\\rHello\\\\\\nWorld!"));
-    }
+	@Test
+	public void testWithLineBreaks() {
+		assertEquals("Hello\\nWorld!", StringUtil.unescape("Hello\\\\nWorld!"));
+		assertEquals("Hello\nWorld!", StringUtil.unescape("Hello\\nWorld!"));
+		assertEquals("Hello\\\nWorld!", StringUtil.unescape("Hello\\\\\\nWorld!"));
+		assertEquals("\rHello\\\nWorld!", StringUtil.unescape("\\rHello\\\\\\nWorld!"));
+	}
 
-    @Test
-    public void testEscape() {
-        assertEquals("Hello\\\\nWorld!", StringUtil.escape("Hello\\nWorld!"));
-        assertEquals("Hello\\nWorld!", StringUtil.escape("Hello\nWorld!"));
-        assertEquals("\\r\tHello\\nWorld!", StringUtil.escape("\r\tHello\nWorld!"));
-        assertEquals("Hello\\\\\\nWorld!", StringUtil.escape("Hello\\\nWorld!"));
-        assertEquals("Hello\tWorld", StringUtil.escape("Hello\tWorld"));
-        assertEquals("Hello\\\\World!", StringUtil.escape("Hello\\World!"));
-    }
+	@Test
+	public void testEscape() {
+		assertEquals("Hello\\\\nWorld!", StringUtil.escape("Hello\\nWorld!"));
+		assertEquals("Hello\\nWorld!", StringUtil.escape("Hello\nWorld!"));
+		assertEquals("\\r\tHello\\nWorld!", StringUtil.escape("\r\tHello\nWorld!"));
+		assertEquals("Hello\\\\\\nWorld!", StringUtil.escape("Hello\\\nWorld!"));
+		assertEquals("Hello\tWorld", StringUtil.escape("Hello\tWorld"));
+		assertEquals("Hello\\\\World!", StringUtil.escape("Hello\\World!"));
+	}
 
 }

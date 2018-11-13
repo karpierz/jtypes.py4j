@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,61 +40,61 @@ import p1.AnObject4;
 
 public class ModelTester {
 
-    @Test
-    public void testModel() {
-        Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
-        assertEquals(clazz.getSignature(false), "p1.AnObject");
-        assertEquals(clazz.getSignature(true), "AnObject");
-        assertEquals(1, clazz.getClasses().size());
-        assertEquals(2, clazz.getMethods().size());
-        assertEquals(1, clazz.getFields().size());
-        Py4JMethod m1 = clazz.getMethods().get(0);
-        Py4JMethod m2 = clazz.getMethods().get(1);
-        Py4JField f1 = clazz.getFields().get(0);
-        Py4JClass clazz2 = clazz.getClasses().get(0);
-        assertEquals(m1.getSignature(false), "m1(java.lang.String, p1.AnObject) : void");
-        assertEquals(m1.getSignature(true), "m1(String, AnObject) : void");
-        assertEquals(m2.getSignature(false), "m2(int) : java.lang.String");
-        assertEquals(m2.getSignature(true), "m2(int) : String");
-        assertEquals(f1.getSignature(false), "value1 : java.lang.Integer");
-        assertEquals(f1.getSignature(true), "value1 : Integer");
-        assertEquals(clazz2.getSignature(false), "p1.AnObject.InternalClass");
-        assertEquals(clazz2.getSignature(true), "InternalClass");
-    }
+	@Test
+	public void testModel() {
+		Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
+		assertEquals(clazz.getSignature(false), "p1.AnObject");
+		assertEquals(clazz.getSignature(true), "AnObject");
+		assertEquals(1, clazz.getClasses().size());
+		assertEquals(2, clazz.getMethods().size());
+		assertEquals(1, clazz.getFields().size());
+		Py4JMethod m1 = clazz.getMethods().get(0);
+		Py4JMethod m2 = clazz.getMethods().get(1);
+		Py4JField f1 = clazz.getFields().get(0);
+		Py4JClass clazz2 = clazz.getClasses().get(0);
+		assertEquals(m1.getSignature(false), "m1(java.lang.String, p1.AnObject) : void");
+		assertEquals(m1.getSignature(true), "m1(String, AnObject) : void");
+		assertEquals(m2.getSignature(false), "m2(int) : java.lang.String");
+		assertEquals(m2.getSignature(true), "m2(int) : String");
+		assertEquals(f1.getSignature(false), "value1 : java.lang.Integer");
+		assertEquals(f1.getSignature(true), "value1 : Integer");
+		assertEquals(clazz2.getSignature(false), "p1.AnObject.InternalClass");
+		assertEquals(clazz2.getSignature(true), "InternalClass");
+	}
 
-    @Test
-    public void testClassWithSuper() {
-        Py4JClass clazz2 = Py4JClass.buildClass(AnObject2.class, true);
-        Py4JClass clazz3 = Py4JClass.buildClass(AnObject3.class, true);
-        Py4JClass clazz4 = Py4JClass.buildClass(AnObject4.class, true);
+	@Test
+	public void testClassWithSuper() {
+		Py4JClass clazz2 = Py4JClass.buildClass(AnObject2.class, true);
+		Py4JClass clazz3 = Py4JClass.buildClass(AnObject3.class, true);
+		Py4JClass clazz4 = Py4JClass.buildClass(AnObject4.class, true);
 
-        assertEquals(clazz2.getSignature(false), "p1.AnObject2 extends p1.AnObject");
-        assertEquals(clazz3.getSignature(false), "p1.AnObject3 implements java.lang.Runnable, java.io.Serializable");
-        assertEquals(clazz4.getSignature(false), "p1.AnObject4 extends p1.AnObject3 implements java.lang.Cloneable");
-    }
+		assertEquals(clazz2.getSignature(false), "p1.AnObject2 extends p1.AnObject");
+		assertEquals(clazz3.getSignature(false), "p1.AnObject3 implements java.lang.Runnable, java.io.Serializable");
+		assertEquals(clazz4.getSignature(false), "p1.AnObject4 extends p1.AnObject3 implements java.lang.Cloneable");
+	}
 
-    @Test
-    public void testClassHelpPage() {
-        // This is manual testing, to see how it will look like.
-        Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
-        String helpPage = HelpPageGenerator.getHelpPage(clazz, null, false);
-        System.out.println("BEGIN");
-        System.out.println(helpPage);
-        System.out.println("END");
+	@Test
+	public void testClassHelpPage() {
+		// This is manual testing, to see how it will look like.
+		Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
+		String helpPage = HelpPageGenerator.getHelpPage(clazz, null, false);
+		System.out.println("BEGIN");
+		System.out.println(helpPage);
+		System.out.println("END");
 
-        helpPage = HelpPageGenerator.getHelpPage(clazz, null, true);
-        System.out.println("BEGIN");
-        System.out.println(helpPage);
-        System.out.println("END");
-    }
+		helpPage = HelpPageGenerator.getHelpPage(clazz, null, true);
+		System.out.println("BEGIN");
+		System.out.println(helpPage);
+		System.out.println("END");
+	}
 
-    @Test
-    public void testMethodHelpPage() {
-        // This is manual testing, to see how it will look like.
-        Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
-        String helpPage = HelpPageGenerator.getHelpPage(clazz.getMethods().get(0), false);
-        System.out.println("BEGIN");
-        System.out.println(helpPage);
-        System.out.println("END");
-    }
+	@Test
+	public void testMethodHelpPage() {
+		// This is manual testing, to see how it will look like.
+		Py4JClass clazz = Py4JClass.buildClass(AnObject.class, true);
+		String helpPage = HelpPageGenerator.getHelpPage(clazz.getMethods().get(0), false);
+		System.out.println("BEGIN");
+		System.out.println(helpPage);
+		System.out.println("END");
+	}
 }

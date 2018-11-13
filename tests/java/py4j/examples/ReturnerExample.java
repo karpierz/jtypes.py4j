@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,23 +31,23 @@ package py4j.examples;
 
 public class ReturnerExample {
 
-    public float computeFloat(IReturnConverter returner) {
-        return returner.getFloat();
-    }
+	public float computeFloat(IReturnConverter returner) {
+		return returner.getFloat();
+	}
 
-    public char computeChar(IReturnConverter returner) {
-        return returner.getChar();
-    }
+	public char computeChar(IReturnConverter returner) {
+		return returner.getChar();
+	}
 
-    public int computeInt(IReturnConverter returner) {
-        return returner.getInt();
-    }
+	public int computeInt(IReturnConverter returner) {
+		return returner.getInt();
+	}
 
-    public int computeNothing(IReturnConverter returner) {
-        return 1;
-    }
+	public int computeNothing(IReturnConverter returner) {
+		return 1;
+	}
 
-    public Object computeNull(IReturnConverter returner) {
-        return returner.getNull();
-    }
+	public Object computeNull(IReturnConverter returner) {
+		return returner.getNull();
+	}
 }

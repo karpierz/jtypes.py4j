@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,37 +30,37 @@
 package py4j.examples;
 
 public class PingPong implements IPong {
-    private boolean fail;
+	private boolean fail;
 
-    public PingPong() {
-        this(false);
+	public PingPong() {
+		this(false);
 
-    }
+	}
 
-    public PingPong(boolean fail) {
-        this.fail = fail;
-    }
+	public PingPong(boolean fail) {
+		this.fail = fail;
+	}
 
-    public int start(IPing ping) {
-        return ping.ping1(this);
-    }
+	public int start(IPing ping) {
+		return ping.ping1(this);
+	}
 
-    @Override
-    public int pong1(IPing ping) {
-        return ping.ping2(this);
-    }
+	@Override
+	public int pong1(IPing ping) {
+		return ping.ping2(this);
+	}
 
-    @Override
-    public int pong2(IPing ping) {
-        return ping.ping3(this);
-    }
+	@Override
+	public int pong2(IPing ping) {
+		return ping.ping3(this);
+	}
 
-    @Override
-    public int pong3(IPing ping) {
-        if (fail) {
-            return 1 / 0;
-        } else {
-            return 2;
-        }
-    }
+	@Override
+	public int pong3(IPing ping) {
+		if (fail) {
+			return 1 / 0;
+		} else {
+			return 2;
+		}
+	}
 }

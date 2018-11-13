@@ -10,11 +10,11 @@ from jt.py4j.java_gateway import (
     JavaGateway, GatewayParameters, CallbackServerParameters)
 from jt.py4j.clientserver import (
     ClientServer, JavaParameters, PythonParameters)
-from .client_server_test import (
+from .client_server_test import (  # <AK> was: from py4j.tests.
     clientserver_example_app_process)
-from .java_callback_test import (
+from .java_callback_test import (  # <AK> was: from py4j.tests.
     IHelloImpl, gateway_example_app_process)
-from .py4j_callback_recursive_example import (
+from .py4j_callback_recursive_example import (  # <AK> was: from py4j.tests.
     HelloState)
 
 
@@ -49,6 +49,7 @@ class MockListener(object):
         self.received["post_shutdown"] += 1
 
 
+@unittest.skip("jt.py4j: !!!")
 class JavaGatewayTest(unittest.TestCase):
 
     def test_all_regular_signals_auto_start(self):
@@ -82,6 +83,7 @@ class JavaGatewayTest(unittest.TestCase):
         self.assertEqual(1, listener.received["connection_stopped"])
 
 
+@unittest.skip("jt.py4j: !!!")
 class ClientServerTest(unittest.TestCase):
 
     def test_all_regular_signals(self):

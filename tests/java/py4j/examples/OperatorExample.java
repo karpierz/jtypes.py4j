@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,59 +37,59 @@ import py4j.GatewayServer;
 
 public class OperatorExample {
 
-    private final static int MAX = 1000;
+	private final static int MAX = 1000;
 
-    public OperatorExample() {
+	public OperatorExample() {
 
-    }
+	}
 
-    public OperatorExample(Operator op) {
-        this.randomBinaryOperator(op);
-    }
+	public OperatorExample(Operator op) {
+		this.randomBinaryOperator(op);
+	}
 
-    public byte[] callBytesOperator(BytesOperator op) {
-        byte[] input = { 1, 2, 3, 4, 5 };
+	public byte[] callBytesOperator(BytesOperator op) {
+		byte[] input = { 1, 2, 3, 4, 5 };
 
-        return op.returnBytes(input);
-    }
+		return op.returnBytes(input);
+	}
 
-    public List<Integer> randomBinaryOperator(Operator op) {
-        Random random = new Random();
-        List<Integer> numbers = new ArrayList<Integer>();
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(op.doOperation(numbers.get(0), numbers.get(1)));
-        return numbers;
-    }
+	public List<Integer> randomBinaryOperator(Operator op) {
+		Random random = new Random();
+		List<Integer> numbers = new ArrayList<Integer>();
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(op.doOperation(numbers.get(0), numbers.get(1)));
+		return numbers;
+	}
 
-    public List<Integer> randomTernaryOperator(Operator op) {
-        Random random = new Random();
-        List<Integer> numbers = new ArrayList<Integer>();
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(op.doOperation(numbers.get(0), numbers.get(1), numbers.get(2)));
-        return numbers;
-    }
+	public List<Integer> randomTernaryOperator(Operator op) {
+		Random random = new Random();
+		List<Integer> numbers = new ArrayList<Integer>();
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(op.doOperation(numbers.get(0), numbers.get(1), numbers.get(2)));
+		return numbers;
+	}
 
-    public void launchOperator(final Operator op, final long waitTimeMillis) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                randomBinaryOperator(op);
-                try {
-                    Thread.currentThread().sleep(waitTimeMillis);
-                } catch (Exception e) {
+	public void launchOperator(final Operator op, final long waitTimeMillis) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				randomBinaryOperator(op);
+				try {
+					Thread.currentThread().sleep(waitTimeMillis);
+				} catch (Exception e) {
 
-                }
-                randomBinaryOperator(op);
-            }
-        }).start();
-    }
+				}
+				randomBinaryOperator(op);
+			}
+		}).start();
+	}
 
-    public static void main(String[] args) {
-        GatewayServer server = new GatewayServer(new OperatorExample());
-        server.start();
-    }
+	public static void main(String[] args) {
+		GatewayServer server = new GatewayServer(new OperatorExample());
+		server.start();
+	}
 
 }

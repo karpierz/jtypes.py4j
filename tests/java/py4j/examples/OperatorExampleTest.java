@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,36 +39,36 @@ import py4j.CallbackClient;
 import py4j.GatewayServer;
 
 public class OperatorExampleTest {
-    private final static int MAX = 1000;
+	private final static int MAX = 1000;
 
-    public List<Integer> randomBinaryOperator(Operator op) {
-        Random random = new Random();
-        List<Integer> numbers = new ArrayList<Integer>();
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(op.doOperation(numbers.get(0), numbers.get(1)));
-        return numbers;
-    }
+	public List<Integer> randomBinaryOperator(Operator op) {
+		Random random = new Random();
+		List<Integer> numbers = new ArrayList<Integer>();
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(op.doOperation(numbers.get(0), numbers.get(1)));
+		return numbers;
+	}
 
-    public List<Integer> randomTernaryOperator(Operator op) {
-        Random random = new Random();
-        List<Integer> numbers = new ArrayList<Integer>();
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(random.nextInt(MAX));
-        numbers.add(op.doOperation(numbers.get(0), numbers.get(1), numbers.get(2)));
-        return numbers;
-    }
+	public List<Integer> randomTernaryOperator(Operator op) {
+		Random random = new Random();
+		List<Integer> numbers = new ArrayList<Integer>();
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(random.nextInt(MAX));
+		numbers.add(op.doOperation(numbers.get(0), numbers.get(1), numbers.get(2)));
+		return numbers;
+	}
 
-    public static void main(String[] args) {
-        try {
-            CallbackClient cbClient = new CallbackClient(InetAddress.getByName(CallbackClient.DEFAULT_ADDRESS),
-                    GatewayServer.DEFAULT_PYTHON_PORT, 2, TimeUnit.SECONDS);
-            GatewayServer server = new GatewayServer(new OperatorExample(), GatewayServer.DEFAULT_PORT,
-                    GatewayServer.DEFAULT_CONNECT_TIMEOUT, GatewayServer.DEFAULT_READ_TIMEOUT, null, cbClient);
-            server.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public static void main(String[] args) {
+		try {
+			CallbackClient cbClient = new CallbackClient(GatewayServer.DEFAULT_PYTHON_PORT,
+					InetAddress.getByName(CallbackClient.DEFAULT_ADDRESS), 2, TimeUnit.SECONDS);
+			GatewayServer server = new GatewayServer(new OperatorExample(), GatewayServer.DEFAULT_PORT,
+					GatewayServer.DEFAULT_CONNECT_TIMEOUT, GatewayServer.DEFAULT_READ_TIMEOUT, null, cbClient);
+			server.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

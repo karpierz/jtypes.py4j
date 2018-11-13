@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,39 +46,39 @@ import py4j.commands.Command;
 
 public class InstrPythonClient extends PythonClient {
 
-    public InstrPythonClient(Gateway gateway, List<Class<? extends Command>> customCommands,
-            InetAddress pythonAddress, int pythonPort, long minConnectionTime, TimeUnit minConnectionTimeUnit,
-            SocketFactory socketFactory, Py4JJavaServer javaServer, boolean enableMemoryManagement, int readTimeout) {
-        super(gateway, customCommands, pythonAddress, pythonPort, minConnectionTime, minConnectionTimeUnit,
-                socketFactory, javaServer, enableMemoryManagement, readTimeout);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrPythonClient(Gateway gateway, List<Class<? extends Command>> customCommands, int pythonPort,
+			InetAddress pythonAddress, long minConnectionTime, TimeUnit minConnectionTimeUnit,
+			SocketFactory socketFactory, Py4JJavaServer javaServer, boolean enableMemoryManagement, int readTimeout) {
+		super(gateway, customCommands, pythonPort, pythonAddress, minConnectionTime, minConnectionTimeUnit,
+				socketFactory, javaServer, enableMemoryManagement, readTimeout);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 
-    @Override
-    protected Py4JClientConnection getConnection() throws IOException {
-        ClientServerConnection connection = null;
+	@Override
+	protected Py4JClientConnection getConnection() throws IOException {
+		ClientServerConnection connection = null;
 
-        connection = getPerThreadConnection();
+		connection = getPerThreadConnection();
 
-        if (connection != null) {
-            connections.remove(connection);
-        }
+		if (connection != null) {
+			connections.remove(connection);
+		}
 
-        if (connection == null || connection.getSocket() == null) {
-            Socket socket = startClientSocket();
-            connection = new InstrClientServerConnection(gateway, socket, customCommands, this, javaServer,
-                    readTimeout);
-            connection.setInitiatedFromClient(true);
-            connection.start();
-            setPerThreadConnection(connection);
-        }
+		if (connection == null || connection.getSocket() == null) {
+			Socket socket = startClientSocket();
+			connection = new InstrClientServerConnection(gateway, socket, customCommands, this, javaServer,
+					readTimeout);
+			connection.setInitiatedFromClient(true);
+			connection.start();
+			setPerThreadConnection(connection);
+		}
 
-        return connection;
-    }
+		return connection;
+	}
 }

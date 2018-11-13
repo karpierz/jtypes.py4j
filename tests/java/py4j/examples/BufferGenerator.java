@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,22 +33,22 @@ import py4j.GatewayServer;
 
 public class BufferGenerator {
 
-    private static GatewayServer server;
+	private static GatewayServer server;
 
-    public StringBuffer getStringBuffer() {
-        StringBuffer sb = new StringBuffer("FromJava");
-        return sb;
-    }
+	public StringBuffer getStringBuffer() {
+		StringBuffer sb = new StringBuffer("FromJava");
+		return sb;
+	}
 
-    public static void main(String[] args) {
-        GatewayServer.turnLoggingOff();
-        server = new GatewayServer(new BufferGenerator());
-        server.start();
-    }
+	public static void main(String[] args) {
+		GatewayServer.turnLoggingOff();
+		server = new GatewayServer(new BufferGenerator());
+		server.start();
+	}
 
-    // Useful for unit tests
-    public static void shutdownGateway() {
-        server.shutdown();
-    }
+	// Useful for unit tests
+	public static void shutdownGateway() {
+		server.shutdown();
+	}
 
 }

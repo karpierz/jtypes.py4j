@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,21 +33,21 @@ import py4j.GatewayServer;
 
 public class StackEntryPoint {
 
-    private Stack stack;
+	private Stack stack;
 
-    public StackEntryPoint() {
-        stack = new Stack();
-        stack.push("Initial Item");
-    }
+	public StackEntryPoint() {
+		stack = new Stack();
+		stack.push("Initial Item");
+	}
 
-    public Stack getStack() {
-        return stack;
-    }
+	public Stack getStack() {
+		return stack;
+	}
 
-    public static void main(String[] args) {
-        GatewayServer gateway = new GatewayServer(new StackEntryPoint());
-        gateway.start();
-        System.out.println("Gateway Server Started");
-    }
+	public static void main(String[] args) {
+		GatewayServer gateway = new GatewayServer(new StackEntryPoint());
+		gateway.start();
+		System.out.println("Gateway Server Started");
+	}
 
 }

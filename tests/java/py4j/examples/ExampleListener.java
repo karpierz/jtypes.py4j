@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,5 +31,5 @@ package py4j.examples;
 
 public interface ExampleListener {
 
-    Object notify(Object source);
+	Object notify(Object source);
 }

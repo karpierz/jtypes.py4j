@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,15 +39,15 @@ import py4j.GatewayServerListener;
 import py4j.commands.Command;
 
 public class InstrGatewayConnection extends GatewayConnection {
-    public InstrGatewayConnection(Gateway gateway, Socket socket, List<Class<? extends Command>> customCommands,
-            List<GatewayServerListener> listeners) throws IOException {
-        super(gateway, socket, customCommands, listeners);
-        MetricRegistry.addCreatedObject(this);
-    }
+	public InstrGatewayConnection(Gateway gateway, Socket socket, List<Class<? extends Command>> customCommands,
+			List<GatewayServerListener> listeners) throws IOException {
+		super(gateway, socket, customCommands, listeners);
+		MetricRegistry.addCreatedObject(this);
+	}
 
-    @Override
-    protected void finalize() throws Throwable {
-        MetricRegistry.addFinalizedObject(this);
-        super.finalize();
-    }
+	@Override
+	protected void finalize() throws Throwable {
+		MetricRegistry.addFinalizedObject(this);
+		super.finalize();
+	}
 }

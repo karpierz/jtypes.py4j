@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,23 +33,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Stack {
-    private List<String> internalList = new LinkedList<String>();
+	private List<String> internalList = new LinkedList<String>();
 
-    public void push(String element) {
-        internalList.add(0, element);
-    }
+	public void push(String element) {
+		internalList.add(0, element);
+	}
 
-    public String pop() {
-        return internalList.remove(0);
-    }
+	public String pop() {
+		return internalList.remove(0);
+	}
 
-    public List<String> getInternalList() {
-        return internalList;
-    }
+	public List<String> getInternalList() {
+		return internalList;
+	}
 
-    public void pushAll(List<String> elements) {
-        for (String element : elements) {
-            this.push(element);
-        }
-    }
+	public void pushAll(List<String> elements) {
+		for (String element : elements) {
+			this.push(element);
+		}
+	}
 }

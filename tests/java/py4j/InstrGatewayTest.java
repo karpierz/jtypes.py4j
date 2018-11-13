@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,24 +38,24 @@ import py4j.instrumented.MetricRegistry;
 
 public class InstrGatewayTest {
 
-    private void startServer() {
-        InstrGatewayServer server = new InstrGatewayServer(null, GatewayServer.DEFAULT_PORT,
-                GatewayServer.DEFAULT_PYTHON_PORT);
-        server.start();
-        server.shutdown();
-    }
+	private void startServer() {
+		InstrGatewayServer server = new InstrGatewayServer(null, GatewayServer.DEFAULT_PORT,
+				GatewayServer.DEFAULT_PYTHON_PORT);
+		server.start();
+		server.shutdown();
+	}
 
-    @Test
-    public void testLifecycle() {
-        startServer();
-        MetricRegistry.forceFinalization();
-        try {
-            Thread.currentThread().sleep(1000);
-        } catch (Exception e) {
+	@Test
+	public void testLifecycle() {
+		startServer();
+		MetricRegistry.forceFinalization();
+		try {
+			Thread.currentThread().sleep(1000);
+		} catch (Exception e) {
 
-        }
-        assertEquals(2, MetricRegistry.getCreatedObjectsKeySet().size());
-        assertEquals(2, MetricRegistry.getFinalizedObjectsKeySet().size());
-        assertEquals(MetricRegistry.getCreatedObjectsKeySet(), MetricRegistry.getFinalizedObjectsKeySet());
-    }
+		}
+		assertEquals(2, MetricRegistry.getCreatedObjectsKeySet().size());
+		assertEquals(2, MetricRegistry.getFinalizedObjectsKeySet().size());
+		assertEquals(MetricRegistry.getCreatedObjectsKeySet(), MetricRegistry.getFinalizedObjectsKeySet());
+	}
 }

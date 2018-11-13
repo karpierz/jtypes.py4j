@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,44 +44,44 @@ import py4j.Gateway;
 import py4j.examples.ExampleEntryPoint;
 
 public class MemoryCommandTest {
-    private ExampleEntryPoint entryPoint;
-    private Gateway gateway;
-    private MemoryCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
-    private String target;
+	private ExampleEntryPoint entryPoint;
+	private Gateway gateway;
+	private MemoryCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
+	private String target;
 
-    @Before
-    public void setUp() {
-        entryPoint = new ExampleEntryPoint();
-        gateway = new Gateway(entryPoint);
-        gateway.startup();
-        command = new MemoryCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
-        target = gateway.getReturnObject(entryPoint.getNewExample()).getName();
-    }
+	@Before
+	public void setUp() {
+		entryPoint = new ExampleEntryPoint();
+		gateway = new Gateway(entryPoint);
+		gateway.startup();
+		command = new MemoryCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
+		target = gateway.getReturnObject(entryPoint.getNewExample()).getName();
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testDelete() {
-        String inputCommand = "d\n" + target + "\ne\n";
-        try {
-            assertTrue(gateway.getBindings().containsKey(target));
-            command.execute("m", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yv\n", sWriter.toString());
-            assertFalse(gateway.getBindings().containsKey(target));
-            command.execute("m", new BufferedReader(new StringReader(inputCommand)), writer);
-            assertEquals("!yv\n!yv\n", sWriter.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+	@Test
+	public void testDelete() {
+		String inputCommand = "d\n" + target + "\ne\n";
+		try {
+			assertTrue(gateway.getBindings().containsKey(target));
+			command.execute("m", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yv\n", sWriter.toString());
+			assertFalse(gateway.getBindings().containsKey(target));
+			command.execute("m", new BufferedReader(new StringReader(inputCommand)), writer);
+			assertEquals("!yv\n!yv\n", sWriter.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 
 }

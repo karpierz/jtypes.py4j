@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,55 +31,55 @@ package py4j.examples;
 
 public class UTFExample {
 
-    private Byte[] array = new Byte[] { 0, 1, 10, 127, -1, -128 };
+	private Byte[] array = new Byte[] { 0, 1, 10, 127, -1, -128 };
 
-    public int strangeMéthod() {
-        return 2;
-    }
+	public int strangeMéthod() {
+		return 2;
+	}
 
-    public Byte[] getSurrogateBytes() {
-        return new Byte[] { (byte) 0xD8, (byte) 0xD9, (byte) 0xDF };
-    }
+	public Byte[] getSurrogateBytes() {
+		return new Byte[] { (byte) 0xD8, (byte) 0xD9, (byte) 0xDF };
+	}
 
-    public byte[] getSurrogatebytes() {
-        return new byte[] { (byte) 0xD8, (byte) 0xD9, (byte) 0xDF };
-    }
+	public byte[] getSurrogatebytes() {
+		return new byte[] { (byte) 0xD8, (byte) 0xD9, (byte) 0xDF };
+	}
 
-    public int getPositiveByteValue(byte b) {
-        return (int) (b & 0xff);
-    }
+	public int getPositiveByteValue(byte b) {
+		return (int) (b & 0xff);
+	}
 
-    public int getJavaByteValue(byte b) {
-        return (int) b;
-    }
+	public int getJavaByteValue(byte b) {
+		return (int) b;
+	}
 
-    public int[] getUtfValue(String s) {
-        int length = s.length();
-        int[] values = new int[length];
+	public int[] getUtfValue(String s) {
+		int length = s.length();
+		int[] values = new int[length];
 
-        for (int i = 0; i < length; i++) {
-            values[i] = s.charAt(i);
-        }
+		for (int i = 0; i < length; i++) {
+			values[i] = s.charAt(i);
+		}
 
-        return values;
-    }
+		return values;
+	}
 
-    public int[] getBytesValue(byte[] bytes) {
-        int length = bytes.length;
-        int[] values = new int[length];
+	public int[] getBytesValue(byte[] bytes) {
+		int length = bytes.length;
+		int[] values = new int[length];
 
-        for (int i = 0; i < length; i++) {
-            values[i] = bytes[i] & 0xff;
-        }
+		for (int i = 0; i < length; i++) {
+			values[i] = bytes[i] & 0xff;
+		}
 
-        return values;
-    }
+		return values;
+	}
 
-    public byte[] getBytesValue() {
-        return new byte[] { 0, 1, 10, 127, -1, -128 };
-    }
+	public byte[] getBytesValue() {
+		return new byte[] { 0, 1, 10, 127, -1, -128 };
+	}
 
-    public Byte[] getBytesArray() {
-        return array;
-    }
+	public Byte[] getBytesArray() {
+		return array;
+	}
 }

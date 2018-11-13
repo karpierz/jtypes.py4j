@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2009-2016, Barthelemy Dagenais and individual contributors.
+ * Copyright (c) 2009-2018, Barthelemy Dagenais and individual contributors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,43 +44,43 @@ import org.junit.Test;
 import py4j.Gateway;
 
 public class ExceptionCommandTest {
-    private Gateway gateway;
-    private ExceptionCommand command;
-    private BufferedWriter writer;
-    private StringWriter sWriter;
+	private Gateway gateway;
+	private ExceptionCommand command;
+	private BufferedWriter writer;
+	private StringWriter sWriter;
 
-    @Before
-    public void setUp() {
-        gateway = new Gateway(null);
-        gateway.startup();
-        command = new ExceptionCommand();
-        command.init(gateway, null);
-        sWriter = new StringWriter();
-        writer = new BufferedWriter(sWriter);
-    }
+	@Before
+	public void setUp() {
+		gateway = new Gateway(null);
+		gateway.startup();
+		command = new ExceptionCommand();
+		command.init(gateway, null);
+		sWriter = new StringWriter();
+		writer = new BufferedWriter(sWriter);
+	}
 
-    @After
-    public void tearDown() {
-        gateway.shutdown();
-    }
+	@After
+	public void tearDown() {
+		gateway.shutdown();
+	}
 
-    @Test
-    public void testException() {
-        String id = null;
-        try {
-            throw new RuntimeException("Hello World");
-        } catch (Exception e) {
-            id = "r" + gateway.putNewObject(e);
-        }
+	@Test
+	public void testException() {
+		String id = null;
+		try {
+			throw new RuntimeException("Hello World");
+		} catch (Exception e) {
+			id = "r" + gateway.putNewObject(e);
+		}
 
-        String inputCommand = id + "\ne\n";
-        try {
-            command.execute("p", new BufferedReader(new StringReader(inputCommand)), writer);
-            System.out.println("DEBUG!!!" + sWriter.toString());
-            assertTrue(sWriter.toString().startsWith("!ysjava.lang.RuntimeException: Hello World"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
+		String inputCommand = id + "\ne\n";
+		try {
+			command.execute("p", new BufferedReader(new StringReader(inputCommand)), writer);
+			System.out.println("DEBUG!!!" + sWriter.toString());
+			assertTrue(sWriter.toString().startsWith("!ysjava.lang.RuntimeException: Hello World"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

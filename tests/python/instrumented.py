@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import  # <AK> added
 
 from collections import deque
 import weakref
@@ -9,7 +9,7 @@ from jt.py4j.clientserver import (
 from jt.py4j.java_gateway import (
     CallbackServer, JavaGateway, GatewayClient, GatewayProperty,
     PythonProxyPool, GatewayConnection, CallbackConnection)
-from .py4j_callback_recursive_example import PythonPing
+from .py4j_callback_recursive_example import PythonPing  # <AK> was: from py4j.tests.
 
 # Use deque to be thread-safe
 MEMORY_HOOKS = deque()
